@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E82279972CC433F800874029 /* HeroModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82279962CC433F800874029 /* HeroModel.swift */; };
+		E822799B2CC564FF00874029 /* PathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E822799A2CC564FF00874029 /* PathView.swift */; };
 		E8B76FFA2CC2B9B700B62000 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FF92CC2B9B700B62000 /* AppDelegate.swift */; };
 		E8B76FFC2CC2B9B700B62000 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FFB2CC2B9B700B62000 /* SceneDelegate.swift */; };
 		E8B76FFE2CC2B9B700B62000 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FFD2CC2B9B700B62000 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		E82279962CC433F800874029 /* HeroModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroModel.swift; sourceTree = "<group>"; };
+		E822799A2CC564FF00874029 /* PathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathView.swift; sourceTree = "<group>"; };
 		E8B76FF62CC2B9B700B62000 /* Marvel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marvel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8B76FF92CC2B9B700B62000 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8B76FFB2CC2B9B700B62000 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				E8B76FFB2CC2B9B700B62000 /* SceneDelegate.swift */,
 				E8B76FFD2CC2B9B700B62000 /* ViewController.swift */,
 				E82279962CC433F800874029 /* HeroModel.swift */,
+				E822799A2CC564FF00874029 /* PathView.swift */,
 				E8B770022CC2B9B900B62000 /* Assets.xcassets */,
 				E8B770042CC2B9B900B62000 /* LaunchScreen.storyboard */,
 				E8B770072CC2B9B900B62000 /* Info.plist */,
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E822799B2CC564FF00874029 /* PathView.swift in Sources */,
 				E8B76FFE2CC2B9B700B62000 /* ViewController.swift in Sources */,
 				E82279972CC433F800874029 /* HeroModel.swift in Sources */,
 				E8B76FFA2CC2B9B700B62000 /* AppDelegate.swift in Sources */,

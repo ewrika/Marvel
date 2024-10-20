@@ -19,6 +19,12 @@ class ViewController: UIViewController {
         return label
     }()
     
+    private let pathView : PathView = {
+       let pathView = PathView()
+        pathView.translatesAutoresizingMaskIntoConstraints = false
+        pathView.backgroundColor = .clear
+        return pathView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +34,13 @@ class ViewController: UIViewController {
         SetupAutoLayout()
         MarvelLogoSetup()
         LabelSetup()
+        PathSetup()
     }
     
     private func SetupAutoLayout(){
         view.addSubview(logoMarvel)
         view.addSubview(label)
+        view.addSubview(pathView)
     }
     
     private func MarvelLogoSetup() {
@@ -49,6 +57,15 @@ class ViewController: UIViewController {
             label.topAnchor.constraint(equalTo: logoMarvel.bottomAnchor, constant: 54),
             label.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ])
+    }
+    
+    private func PathSetup(){
+        NSLayoutConstraint.activate([
+            pathView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            pathView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            pathView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            pathView.rightAnchor.constraint(equalTo: view.rightAnchor)
+            ])
     }
 }
 
