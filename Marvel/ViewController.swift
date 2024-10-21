@@ -1,7 +1,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+    var lastIndex = 0
     private let logoMarvel: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -119,7 +119,20 @@ extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource{
         return cell
         
     }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+           let centerIndex = findCenterIndex()
+            pathView.color = HeroList[centerIndex].color
+       }
+       
+       private func findCenterIndex() -> Int {
+           let center = self.view.convert(self.colletionView.center, to: self.colletionView)
+           let index = colletionView.indexPathForItem(at: center)
+           lastIndex = index?.item ?? lastIndex
+           return lastIndex
+       }
 }
+
+
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
