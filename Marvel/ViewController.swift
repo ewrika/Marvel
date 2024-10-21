@@ -30,13 +30,14 @@ class ViewController: UIViewController {
     }()
     
     private var colletionView:UICollectionView = {
-        var layout = UICollectionViewFlowLayout()
+        var layout = PagingCollectionViewLayout()
         layout.scrollDirection = .horizontal
-        
         let colletionView = UICollectionView(frame: .zero,collectionViewLayout: layout)
         colletionView.backgroundColor = .clear
         colletionView.register(HeroCell.self, forCellWithReuseIdentifier: String(describing: HeroCell.self))
         colletionView.isPagingEnabled = true
+        colletionView.decelerationRate = .fast
+        
         colletionView.showsHorizontalScrollIndicator = false
 
         return colletionView
@@ -133,12 +134,27 @@ extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource{
 }
 
 
-
 extension ViewController: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 300, height: 550)
+        let width = collectionView.bounds.width * 0.9
+        let height = collectionView.bounds.height * 0.8
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let cellWidth = collectionView.bounds.width * 0.9
+        let horizontalInset = (collectionView.bounds.width - cellWidth) / 2
+        return UIEdgeInsets(top: 0, left: horizontalInset, bottom: 0, right: horizontalInset)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 25
     }
 }
+
+
+
 
 #Preview {
     ViewController()

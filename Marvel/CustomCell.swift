@@ -44,11 +44,16 @@ final class HeroCell: UICollectionViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 28),
-            label.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -130),
-            label.heightAnchor.constraint(equalToConstant: 40)
+            label.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -120),
+            label.heightAnchor.constraint(equalToConstant: 50)
         ])
+        
+        contentView.layer.cornerRadius = 15
+        contentView.layer.masksToBounds = true
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -62,6 +67,7 @@ final class HeroCell: UICollectionViewCell {
 }
 
 
+
 #Preview {
     let cell = HeroCell(frame: CGRect(x: 0, y: 0, width: 300, height: 400))
     
@@ -69,3 +75,5 @@ final class HeroCell: UICollectionViewCell {
     
     return cell
 }
+
+
