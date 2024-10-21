@@ -6,6 +6,7 @@ class ViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "marvelLogo")
+        
         return imageView
     }()
     
@@ -16,6 +17,7 @@ class ViewController: UIViewController {
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         label.textColor = .white
+        
         return label
     }()
     
@@ -23,7 +25,21 @@ class ViewController: UIViewController {
        let pathView = PathView()
         pathView.translatesAutoresizingMaskIntoConstraints = false
         pathView.backgroundColor = .clear
+        
         return pathView
+    }()
+    
+    private var colletionView:UICollectionView = {
+        var layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let colletionView = UICollectionView(frame: .zero,collectionViewLayout: layout)
+        colletionView.backgroundColor = .clear
+        colletionView.register(HeroCell.self, forCellWithReuseIdentifier: String(describing: HeroCell.self))
+        colletionView.isPagingEnabled = true
+        colletionView.showsHorizontalScrollIndicator = false
+
+        return colletionView
     }()
 
     override func viewDidLoad() {
@@ -35,12 +51,18 @@ class ViewController: UIViewController {
         MarvelLogoSetup()
         LabelSetup()
         PathSetup()
+        CellImageSetup()
+        
+        
+        self.colletionView.dataSource = self
+        self.colletionView.delegate = self
     }
     
     private func SetupAutoLayout(){
         view.addSubview(logoMarvel)
         view.addSubview(label)
         view.addSubview(pathView)
+        view.addSubview(colletionView)
     }
     
     private func MarvelLogoSetup() {
@@ -67,8 +89,45 @@ class ViewController: UIViewController {
             pathView.rightAnchor.constraint(equalTo: view.rightAnchor)
             ])
     }
+    
+    private func CellImageSetup(){
+        colletionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+             colletionView.topAnchor.constraint(equalTo: label.bottomAnchor),
+             colletionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+             colletionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+             colletionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+             ])
+    }
+
+}
+
+extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        HeroList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing:HeroCell.self), for: indexPath) as? HeroCell else {
+            fatalError("Failed")
+        }
+        let image = HeroList[indexPath.item]
+        
+        cell.configure(with: UIImage(named:image.image)!, name:image.name )
+        
+        return cell
+        
+    }
+}
+
+extension ViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 300, height: 550)
+    }
 }
 
 #Preview {
     ViewController()
 }
+
