@@ -16,6 +16,8 @@
 		E8B76FFE2CC2B9B700B62000 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FFD2CC2B9B700B62000 /* ViewController.swift */; };
 		E8B770032CC2B9B900B62000 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8B770022CC2B9B900B62000 /* Assets.xcassets */; };
 		E8B770062CC2B9B900B62000 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E8B770052CC2B9B900B62000 /* Base */; };
+		E8DD581A2CC79D7B00C47A36 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DD58192CC79D7B00C47A36 /* Constants.swift */; };
+		E8DD581E2CC79DD400C47A36 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DD581D2CC79DD400C47A36 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		E8B770022CC2B9B900B62000 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E8B770052CC2B9B900B62000 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E8B770072CC2B9B900B62000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E8DD58192CC79D7B00C47A36 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E8DD581D2CC79DD400C47A36 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,16 +68,58 @@
 			children = (
 				E8B76FF92CC2B9B700B62000 /* AppDelegate.swift */,
 				E8B76FFB2CC2B9B700B62000 /* SceneDelegate.swift */,
-				E8B76FFD2CC2B9B700B62000 /* ViewController.swift */,
+				E8DD58202CC7A1F200C47A36 /* ViewControllers */,
 				E82279A02CC6B24C00874029 /* PagingCollectionViewLayout.swift */,
-				E822799E2CC59A7500874029 /* CustomCell.swift */,
-				E82279962CC433F800874029 /* HeroModel.swift */,
-				E822799A2CC564FF00874029 /* PathView.swift */,
+				E8DD58212CC7A21100C47A36 /* Views */,
+				E8DD581B2CC79DA500C47A36 /* Model */,
+				E8DD581C2CC79DC000C47A36 /* Helpers */,
 				E8B770022CC2B9B900B62000 /* Assets.xcassets */,
 				E8B770042CC2B9B900B62000 /* LaunchScreen.storyboard */,
 				E8B770072CC2B9B900B62000 /* Info.plist */,
 			);
 			path = Marvel;
+			sourceTree = "<group>";
+		};
+		E8DD581B2CC79DA500C47A36 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E82279962CC433F800874029 /* HeroModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E8DD581C2CC79DC000C47A36 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E8DD58192CC79D7B00C47A36 /* Constants.swift */,
+				E8DD581F2CC79DDE00C47A36 /* Extensions */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		E8DD581F2CC79DDE00C47A36 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E8DD581D2CC79DD400C47A36 /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E8DD58202CC7A1F200C47A36 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E8B76FFD2CC2B9B700B62000 /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E8DD58212CC7A21100C47A36 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E822799E2CC59A7500874029 /* CustomCell.swift */,
+				E822799A2CC564FF00874029 /* PathView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,12 +193,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E82279A12CC6B24C00874029 /* PagingCollectionViewLayout.swift in Sources */,
+				E8DD581E2CC79DD400C47A36 /* Extensions.swift in Sources */,
 				E822799B2CC564FF00874029 /* PathView.swift in Sources */,
 				E8B76FFE2CC2B9B700B62000 /* ViewController.swift in Sources */,
 				E82279972CC433F800874029 /* HeroModel.swift in Sources */,
 				E8B76FFA2CC2B9B700B62000 /* AppDelegate.swift in Sources */,
 				E822799F2CC59A7500874029 /* CustomCell.swift in Sources */,
 				E8B76FFC2CC2B9B700B62000 /* SceneDelegate.swift in Sources */,
+				E8DD581A2CC79D7B00C47A36 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

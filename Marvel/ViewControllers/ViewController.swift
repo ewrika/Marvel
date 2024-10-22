@@ -45,8 +45,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //TODO: Изменить assets Цвета на static var color потому что не так отображается
-        view.backgroundColor = UIColor(red: 0.17, green: 0.15, blue: 0.17, alpha: 1.0)
+        view.backgroundColor = Constants.backGround
 
         SetupAutoLayout()
         MarvelLogoSetup()
