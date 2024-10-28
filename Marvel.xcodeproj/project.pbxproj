@@ -11,6 +11,7 @@
 		E822799B2CC564FF00874029 /* PathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E822799A2CC564FF00874029 /* PathView.swift */; };
 		E822799F2CC59A7500874029 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E822799E2CC59A7500874029 /* CustomCell.swift */; };
 		E82279A12CC6B24C00874029 /* PagingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82279A02CC6B24C00874029 /* PagingCollectionViewLayout.swift */; };
+		E8A62A192CD0163E0081A03E /* CollectionViewPagingLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */; };
 		E8B76FFA2CC2B9B700B62000 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FF92CC2B9B700B62000 /* AppDelegate.swift */; };
 		E8B76FFC2CC2B9B700B62000 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FFB2CC2B9B700B62000 /* SceneDelegate.swift */; };
 		E8B76FFE2CC2B9B700B62000 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FFD2CC2B9B700B62000 /* ViewController.swift */; };
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8A62A192CD0163E0081A03E /* CollectionViewPagingLayout in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +140,9 @@
 			dependencies = (
 			);
 			name = Marvel;
+			packageProductDependencies = (
+				E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */,
+			);
 			productName = Marvel;
 			productReference = E8B76FF62CC2B9B700B62000 /* Marvel.app */;
 			productType = "com.apple.product-type.application";
@@ -166,6 +171,9 @@
 				Base,
 			);
 			mainGroup = E8B76FED2CC2B9B700B62000;
+			packageReferences = (
+				E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */,
+			);
 			productRefGroup = E8B76FF72CC2B9B700B62000 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -413,6 +421,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ewrika/CollectionViewPagingLayout";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */;
+			productName = CollectionViewPagingLayout;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E8B76FEE2CC2B9B700B62000 /* Project object */;
 }

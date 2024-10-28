@@ -1,4 +1,6 @@
 import UIKit
+import CollectionViewPagingLayout
+
 
 class ViewController: UIViewController {
     var lastIndex = 0
@@ -22,31 +24,33 @@ class ViewController: UIViewController {
     }()
     
     private let pathView : PathView = {
-       let pathView = PathView()
+        let pathView = PathView()
         pathView.translatesAutoresizingMaskIntoConstraints = false
         pathView.backgroundColor = .clear
         
         return pathView
     }()
     
-    private var colletionView:UICollectionView = {
-        var layout = PagingCollectionViewLayout()
+    private var collectionView:UICollectionView = {
+        var layout = CollectionViewPagingLayout()
         layout.scrollDirection = .horizontal
-        let colletionView = UICollectionView(frame: .zero,collectionViewLayout: layout)
-        colletionView.backgroundColor = .clear
-        colletionView.register(HeroCell.self, forCellWithReuseIdentifier: String(describing: HeroCell.self))
-        colletionView.isPagingEnabled = true
-        colletionView.decelerationRate = .fast
+        layout.numberOfVisibleItems = nil
+
+        let collectionView = UICollectionView(frame: .zero,collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.register(HeroCell.self, forCellWithReuseIdentifier: String(describing: HeroCell.self))
+        collectionView.isPagingEnabled = true
+        collectionView.decelerationRate = .fast
         
-        colletionView.showsHorizontalScrollIndicator = false
-
-        return colletionView
+        collectionView.showsHorizontalScrollIndicator = false
+        
+        return collectionView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Constants.backGround
-
+        
         SetupAutoLayout()
         MarvelLogoSetup()
         LabelSetup()
@@ -54,15 +58,15 @@ class ViewController: UIViewController {
         CellImageSetup()
         
         
-        self.colletionView.dataSource = self
-        self.colletionView.delegate = self
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
     }
     
     private func SetupAutoLayout(){
         view.addSubview(logoMarvel)
         view.addSubview(label)
         view.addSubview(pathView)
-        view.addSubview(colletionView)
+        view.addSubview(collectionView)
     }
     
     private func MarvelLogoSetup() {
@@ -87,20 +91,20 @@ class ViewController: UIViewController {
             pathView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             pathView.leftAnchor.constraint(equalTo: view.leftAnchor),
             pathView.rightAnchor.constraint(equalTo: view.rightAnchor)
-            ])
+        ])
     }
     
     private func CellImageSetup(){
-        colletionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-             colletionView.topAnchor.constraint(equalTo: label.bottomAnchor),
-             colletionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-             colletionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-             colletionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-             ])
+            collectionView.topAnchor.constraint(equalTo: label.bottomAnchor),
+            collectionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            collectionView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
-
+    
 }
 
 extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource{
@@ -120,35 +124,15 @@ extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource{
         
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-           let centerIndex = findCenterIndex()
-            pathView.color = HeroList[centerIndex].color
-       }
-       
-       private func findCenterIndex() -> Int {
-           let center = self.view.convert(self.colletionView.center, to: self.colletionView)
-           let index = colletionView.indexPathForItem(at: center)
-           lastIndex = index?.item ?? lastIndex
-           return lastIndex
-       }
-}
-
-
-extension ViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.bounds.width * 0.9
-        let height = collectionView.bounds.height * 0.8
-        return CGSize(width: width, height: height)
+        let centerIndex = findCenterIndex()
+        pathView.color = HeroList[centerIndex].color
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let cellWidth = collectionView.bounds.width * 0.9
-        let horizontalInset = (collectionView.bounds.width - cellWidth) / 2
-        return UIEdgeInsets(top: 0, left: horizontalInset, bottom: 0, right: horizontalInset)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 25
+    private func findCenterIndex() -> Int {
+        let center = self.view.convert(self.collectionView.center, to: self.collectionView)
+        let index = collectionView.indexPathForItem(at: center)
+        lastIndex = index?.item ?? lastIndex
+        return lastIndex
     }
 }
 

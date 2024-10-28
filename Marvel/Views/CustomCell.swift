@@ -1,4 +1,5 @@
 import Foundation
+import CollectionViewPagingLayout
 import UIKit
 
 final class HeroCell: UICollectionViewCell {
@@ -66,7 +67,11 @@ final class HeroCell: UICollectionViewCell {
     }
 }
 
-
+extension HeroCell: ScaleTransformView {
+    var scaleOptions: ScaleTransformViewOptions {
+        .layout(.linear)
+    }
+}
 
 #Preview {
     let cell = HeroCell(frame: CGRect(x: 0, y: 0, width: 300, height: 400))
