@@ -5,7 +5,7 @@ import UIKit
 final class HeroCell: UICollectionViewCell {
 
     private lazy var heroImageView: UIImageView = {
-        let imageView = UIImageView(frame: self.frame)
+        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         
@@ -24,6 +24,7 @@ final class HeroCell: UICollectionViewCell {
     
     private var view: UIView = {
         let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .black
         view.layer.cornerRadius = 20
         
@@ -33,27 +34,32 @@ final class HeroCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        // Добавляем heroImageView и label в contentView
-        contentView.addSubview(heroImageView)
-        contentView.addSubview(label)
+        contentView.addSubview(view)
+        view.addSubview(heroImageView)
+        view.addSubview(label)
         
         NSLayoutConstraint.activate([
-            heroImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            heroImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            heroImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            heroImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            view.topAnchor.constraint(equalTo: contentView.topAnchor),
+            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30),
+            view.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -30),
+            view.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 30)
         ])
         
         NSLayoutConstraint.activate([
-            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-            label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 28),
-            label.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -120),
+            heroImageView.topAnchor.constraint(equalTo: view.topAnchor),
+            heroImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            heroImageView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            heroImageView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             label.heightAnchor.constraint(equalToConstant: 50)
         ])
-        
-        contentView.layer.cornerRadius = 15
-        contentView.layer.masksToBounds = true
-        
+        	
+        view.layer.cornerRadius = 15
+        view.layer.masksToBounds = true
         
     }
     
@@ -80,5 +86,3 @@ extension HeroCell: ScaleTransformView {
     
     return cell
 }
-
-
