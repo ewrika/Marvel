@@ -10,7 +10,7 @@ import UIKit
 
 final class PathView:UIView {
     private let path = UIBezierPath()
-    var color: UIColor = Constants.deadPool {
+    var color: UIColor = UIColor(.clear) {
         didSet{
             setNeedsDisplay()
         }

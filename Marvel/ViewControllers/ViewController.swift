@@ -7,7 +7,7 @@ class ViewController: UIViewController {
     private let logoMarvel: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "marvelLogo")
+        imageView.image = Constants.Photo.marvelLogo
         
         return imageView
     }()
@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Choose your hero"
+        label.text = Constants.Text.chooseHero
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         label.textColor = .white
@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         return label
     }()
     
-    private let pathView : PathView = {
+    private let pathView: PathView = {
         let pathView = PathView()
         pathView.translatesAutoresizingMaskIntoConstraints = false
         pathView.backgroundColor = .clear
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         return pathView
     }()
     
-    private var collectionView:UICollectionView = {
+    private var collectionView: UICollectionView = {
         var layout = CollectionViewPagingLayout()
         layout.scrollDirection = .horizontal
         layout.numberOfVisibleItems = nil
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         collectionView.register(HeroCell.self, forCellWithReuseIdentifier: String(describing: HeroCell.self))
         collectionView.isPagingEnabled = true
         collectionView.decelerationRate = .fast
-        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
         
         return collectionView
@@ -60,6 +60,19 @@ class ViewController: UIViewController {
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
+        
+        setInitialPathViewColor()
+
+        
+    }
+    
+    
+    private func setInitialPathViewColor() {
+        if let firstHero = HeroList.first,
+           let firstImage = UIImage(named: firstHero.image),
+           let initialColor = firstImage.averageColor {
+            pathView.color = initialColor
+        }
     }
     
     private func SetupAutoLayout(){
@@ -95,7 +108,6 @@ class ViewController: UIViewController {
     }
     
     private func CellImageSetup(){
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: label.bottomAnchor),
@@ -104,6 +116,8 @@ class ViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
+    
     
 }
 
@@ -114,19 +128,34 @@ extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing:HeroCell.self), for: indexPath) as? HeroCell else {
-            fatalError("Failed")
+             print("failed")
+            return UICollectionViewCell()
         }
-        let image = HeroList[indexPath.item]
+        let hero = HeroList[indexPath.item]
         
-        cell.configure(with: UIImage(named:image.image)!, name:image.name )
         
+        if let image = UIImage(named: hero.image) {
+            cell.configure(with: image, name: hero.name)
+        } else {
+            print("Hero image \(hero.image) not found")
+        }
+        
+
         return cell
         
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let centerIndex = findCenterIndex()
-        pathView.color = HeroList[centerIndex].color
+        let hero = HeroList[centerIndex]
+
+        if let image = UIImage(named: hero.image),
+           let averageColor = image.averageColor {
+            pathView.color = averageColor
+        } else {
+            pathView.color = .clear
+        }
     }
+
     
     private func findCenterIndex() -> Int {
         let center = self.view.convert(self.collectionView.center, to: self.collectionView)
