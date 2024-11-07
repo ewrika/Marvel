@@ -8,15 +8,13 @@
 import Foundation
 import UIKit
 
-struct HeroModel{
-    var image: String
-    var name : String
-    var color : UIColor
+struct HeroModel {
+    let image: String
+    let name: String
 }
 
-
-let HeroList : [HeroModel] = [ 
-    HeroModel(image: "deadpool", name: "Deadpool", color: Constants.deadPool),
-    HeroModel(image: "starman", name: "Iron Man",  color:Constants.ironMan),
-    HeroModel(image: "webman", name: "Spider Man", color: Constants.spiderMan)
+let heroList: [HeroModel] = [
+    HeroModel(image: "deadpool", name: "Deadpool"),
+    HeroModel(image: "starman", name: "Iron Man"),
+    HeroModel(image: "webman", name: "Spider Man")
 ]

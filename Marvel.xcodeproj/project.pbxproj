@@ -8,9 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E82279972CC433F800874029 /* HeroModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82279962CC433F800874029 /* HeroModel.swift */; };
-		E822799B2CC564FF00874029 /* PathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E822799A2CC564FF00874029 /* PathView.swift */; };
-		E822799F2CC59A7500874029 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E822799E2CC59A7500874029 /* CustomCell.swift */; };
-		E82279A12CC6B24C00874029 /* PagingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82279A02CC6B24C00874029 /* PagingCollectionViewLayout.swift */; };
+		E822799B2CC564FF00874029 /* TrianglePathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E822799A2CC564FF00874029 /* TrianglePathView.swift */; };
+		E822799F2CC59A7500874029 /* HeroCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E822799E2CC59A7500874029 /* HeroCell.swift */; };
 		E8A62A192CD0163E0081A03E /* CollectionViewPagingLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */; };
 		E8B76FFA2CC2B9B700B62000 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FF92CC2B9B700B62000 /* AppDelegate.swift */; };
 		E8B76FFC2CC2B9B700B62000 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FFB2CC2B9B700B62000 /* SceneDelegate.swift */; };
@@ -23,9 +22,8 @@
 
 /* Begin PBXFileReference section */
 		E82279962CC433F800874029 /* HeroModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroModel.swift; sourceTree = "<group>"; };
-		E822799A2CC564FF00874029 /* PathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathView.swift; sourceTree = "<group>"; };
-		E822799E2CC59A7500874029 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
-		E82279A02CC6B24C00874029 /* PagingCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagingCollectionViewLayout.swift; sourceTree = "<group>"; };
+		E822799A2CC564FF00874029 /* TrianglePathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrianglePathView.swift; sourceTree = "<group>"; };
+		E822799E2CC59A7500874029 /* HeroCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroCell.swift; sourceTree = "<group>"; };
 		E8B76FF62CC2B9B700B62000 /* Marvel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marvel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8B76FF92CC2B9B700B62000 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8B76FFB2CC2B9B700B62000 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,7 +69,6 @@
 				E8B76FF92CC2B9B700B62000 /* AppDelegate.swift */,
 				E8B76FFB2CC2B9B700B62000 /* SceneDelegate.swift */,
 				E8DD58202CC7A1F200C47A36 /* ViewControllers */,
-				E82279A02CC6B24C00874029 /* PagingCollectionViewLayout.swift */,
 				E8DD58212CC7A21100C47A36 /* Views */,
 				E8DD581B2CC79DA500C47A36 /* Model */,
 				E8DD581C2CC79DC000C47A36 /* Helpers */,
@@ -118,8 +115,8 @@
 		E8DD58212CC7A21100C47A36 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E822799E2CC59A7500874029 /* CustomCell.swift */,
-				E822799A2CC564FF00874029 /* PathView.swift */,
+				E822799E2CC59A7500874029 /* HeroCell.swift */,
+				E822799A2CC564FF00874029 /* TrianglePathView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -138,6 +135,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E8A888522CDCA7260095BC18 /* PBXTargetDependency */,
 			);
 			name = Marvel;
 			packageProductDependencies = (
@@ -173,6 +171,7 @@
 			mainGroup = E8B76FED2CC2B9B700B62000;
 			packageReferences = (
 				E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */,
+				E8A888502CDCA50E0095BC18 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			productRefGroup = E8B76FF72CC2B9B700B62000 /* Products */;
 			projectDirPath = "";
@@ -200,19 +199,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E82279A12CC6B24C00874029 /* PagingCollectionViewLayout.swift in Sources */,
 				E8DD581E2CC79DD400C47A36 /* Extensions.swift in Sources */,
-				E822799B2CC564FF00874029 /* PathView.swift in Sources */,
+				E822799B2CC564FF00874029 /* TrianglePathView.swift in Sources */,
 				E8B76FFE2CC2B9B700B62000 /* ViewController.swift in Sources */,
 				E82279972CC433F800874029 /* HeroModel.swift in Sources */,
 				E8B76FFA2CC2B9B700B62000 /* AppDelegate.swift in Sources */,
-				E822799F2CC59A7500874029 /* CustomCell.swift in Sources */,
+				E822799F2CC59A7500874029 /* HeroCell.swift in Sources */,
 				E8B76FFC2CC2B9B700B62000 /* SceneDelegate.swift in Sources */,
 				E8DD581A2CC79D7B00C47A36 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E8A888522CDCA7260095BC18 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = E8A888512CDCA7260095BC18 /* SwiftLintBuildToolPlugin */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E8B770042CC2B9B900B62000 /* LaunchScreen.storyboard */ = {
@@ -431,6 +436,14 @@
 				kind = branch;
 			};
 		};
+		E8A888502CDCA50E0095BC18 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.57.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -438,6 +451,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */;
 			productName = CollectionViewPagingLayout;
+		};
+		E8A888512CDCA7260095BC18 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8A888502CDCA50E0095BC18 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

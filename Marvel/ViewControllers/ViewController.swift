@@ -1,17 +1,16 @@
 import UIKit
 import CollectionViewPagingLayout
 
-
 class ViewController: UIViewController {
     var lastIndex = 0
     private let logoMarvel: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = Constants.Photo.marvelLogo
-        
+
         return imageView
     }()
-    
+
     private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -19,18 +18,18 @@ class ViewController: UIViewController {
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         label.textColor = .white
-        
+
         return label
     }()
-    
-    private let pathView: PathView = {
-        let pathView = PathView()
+
+    private let pathView: TrianglePathView = {
+        let pathView = TrianglePathView()
         pathView.translatesAutoresizingMaskIntoConstraints = false
         pathView.backgroundColor = .clear
-        
+
         return pathView
     }()
-    
+
     private var collectionView: UICollectionView = {
         var layout = CollectionViewPagingLayout()
         layout.scrollDirection = .horizontal
@@ -43,46 +42,43 @@ class ViewController: UIViewController {
         collectionView.decelerationRate = .fast
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
-        
+
         return collectionView
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Constants.backGround
-        
-        SetupAutoLayout()
-        MarvelLogoSetup()
-        LabelSetup()
-        PathSetup()
-        CellImageSetup()
-        
-        
+
+        setupConstraints()
+        marvelLogoSetup()
+        labelSetup()
+        pathSetup()
+        cellImageSetup()
+
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
-        
+
         setInitialPathViewColor()
 
-        
     }
-    
-    
+
     private func setInitialPathViewColor() {
-        if let firstHero = HeroList.first,
+        if let firstHero = heroList.first,
            let firstImage = UIImage(named: firstHero.image),
            let initialColor = firstImage.averageColor {
             pathView.color = initialColor
         }
     }
-    
-    private func SetupAutoLayout(){
+
+    private func setupConstraints() {
         view.addSubview(logoMarvel)
         view.addSubview(label)
         view.addSubview(pathView)
         view.addSubview(collectionView)
     }
-    
-    private func MarvelLogoSetup() {
+
+    private func marvelLogoSetup() {
         NSLayoutConstraint.activate([
             logoMarvel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             logoMarvel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -90,15 +86,15 @@ class ViewController: UIViewController {
             logoMarvel.widthAnchor.constraint(equalToConstant: 128)
         ])
     }
-    
-    private func LabelSetup(){
+
+    private func labelSetup() {
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: logoMarvel.bottomAnchor, constant: 54),
             label.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ])
     }
-    
-    private func PathSetup(){
+
+    private func pathSetup() {
         NSLayoutConstraint.activate([
             pathView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             pathView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -106,9 +102,9 @@ class ViewController: UIViewController {
             pathView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
     }
-    
-    private func CellImageSetup(){
-        
+
+    private func cellImageSetup() {
+
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: label.bottomAnchor),
             collectionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -116,37 +112,30 @@ class ViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-    
-    
-    
 }
 
-extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource{
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        HeroList.count
+        heroList.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing:HeroCell.self), for: indexPath) as? HeroCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HeroCell.self), for: indexPath) as? HeroCell else {
              print("failed")
             return UICollectionViewCell()
         }
-        let hero = HeroList[indexPath.item]
-        
-        
+        let hero = heroList[indexPath.item]
+
         if let image = UIImage(named: hero.image) {
             cell.configure(with: image, name: hero.name)
         } else {
             print("Hero image \(hero.image) not found")
         }
-        
-
         return cell
-        
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let centerIndex = findCenterIndex()
-        let hero = HeroList[centerIndex]
+        let hero = heroList[centerIndex]
 
         if let image = UIImage(named: hero.image),
            let averageColor = image.averageColor {
@@ -156,7 +145,6 @@ extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource{
         }
     }
 
-    
     private func findCenterIndex() -> Int {
         let center = self.view.convert(self.collectionView.center, to: self.collectionView)
         let index = collectionView.indexPathForItem(at: center)
@@ -165,10 +153,6 @@ extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource{
     }
 }
 
-
-
-
 #Preview {
     ViewController()
 }
-
