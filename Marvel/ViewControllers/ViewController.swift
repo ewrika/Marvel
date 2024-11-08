@@ -50,7 +50,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Constants.backGround
 
-        setupConstraints()
+        addSubviews()
         marvelLogoSetup()
         labelSetup()
         pathSetup()
@@ -71,7 +71,7 @@ class ViewController: UIViewController {
         }
     }
 
-    private func setupConstraints() {
+    private func addSubviews() {
         view.addSubview(logoMarvel)
         view.addSubview(label)
         view.addSubview(pathView)
