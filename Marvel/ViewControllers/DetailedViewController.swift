@@ -13,7 +13,6 @@ class DetailedViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
-        imageView.image = UIImage(named: "deadpool") // Удалить
 
         return imageView
     }()
@@ -23,7 +22,6 @@ class DetailedViewController: UIViewController {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.textColor = .white
         nameLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
-        nameLabel.text = "DeadPool" // Удалить
 
         return nameLabel
     }()
@@ -36,7 +34,6 @@ class DetailedViewController: UIViewController {
         descriptionLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         descriptionLabel.isEditable = false
         descriptionLabel.textAlignment = .left
-        descriptionLabel.text = "32131321321313" // Удалить
 
         return descriptionLabel
     }()

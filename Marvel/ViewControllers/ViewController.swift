@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         layout.scrollDirection = .horizontal
         layout.numberOfVisibleItems = nil
 
-        let collectionView = UICollectionView(frame: .zero,collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.register(HeroCell.self, forCellWithReuseIdentifier: String(describing: HeroCell.self))
         collectionView.isPagingEnabled = true
@@ -45,6 +45,8 @@ class ViewController: UIViewController {
 
         return collectionView
     }()
+
+    private let detailedViewController = DetailedViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,6 +153,19 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         lastIndex = index?.item ?? lastIndex
         return lastIndex
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let hero = heroList[indexPath.item]
+
+        guard let image = UIImage(named: hero.image) else {
+            print("Hero image \(hero.image) not found")
+            return
+        }
+
+        detailedViewController.configure(with: image, name: hero.name, description: hero.description)
+        navigationController?.pushViewController(detailedViewController, animated: true)
+    }
+
 }
 
 #Preview {
