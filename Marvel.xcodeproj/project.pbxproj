@@ -12,6 +12,7 @@
 		E822799F2CC59A7500874029 /* HeroCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E822799E2CC59A7500874029 /* HeroCell.swift */; };
 		E8A62A192CD0163E0081A03E /* CollectionViewPagingLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */; };
 		E8A888542CDE8F640095BC18 /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A888532CDE8F640095BC18 /* DetailedViewController.swift */; };
+		E8A888572CDFD3280095BC18 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E8A888562CDFD3280095BC18 /* Kingfisher */; };
 		E8B76FFA2CC2B9B700B62000 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FF92CC2B9B700B62000 /* AppDelegate.swift */; };
 		E8B76FFC2CC2B9B700B62000 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FFB2CC2B9B700B62000 /* SceneDelegate.swift */; };
 		E8B76FFE2CC2B9B700B62000 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FFD2CC2B9B700B62000 /* ViewController.swift */; };
@@ -42,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8A888572CDFD3280095BC18 /* Kingfisher in Frameworks */,
 				E8A62A192CD0163E0081A03E /* CollectionViewPagingLayout in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -143,6 +145,7 @@
 			name = Marvel;
 			packageProductDependencies = (
 				E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */,
+				E8A888562CDFD3280095BC18 /* Kingfisher */,
 			);
 			productName = Marvel;
 			productReference = E8B76FF62CC2B9B700B62000 /* Marvel.app */;
@@ -175,6 +178,7 @@
 			packageReferences = (
 				E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */,
 				E8A888502CDCA50E0095BC18 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				E8A888552CDFD3280095BC18 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = E8B76FF72CC2B9B700B62000 /* Products */;
 			projectDirPath = "";
@@ -448,6 +452,14 @@
 				minimumVersion = 0.57.0;
 			};
 		};
+		E8A888552CDFD3280095BC18 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -460,6 +472,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E8A888502CDCA50E0095BC18 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		E8A888562CDFD3280095BC18 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8A888552CDFD3280095BC18 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

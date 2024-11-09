@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         layout.scrollDirection = .horizontal
         layout.numberOfVisibleItems = nil
 
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame:.zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.register(HeroCell.self, forCellWithReuseIdentifier: String(describing: HeroCell.self))
         collectionView.isPagingEnabled = true

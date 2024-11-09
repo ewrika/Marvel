@@ -93,5 +93,9 @@ class DetailedViewController: UIViewController {
 }
 
 #Preview{
-    DetailedViewController()
+    let preview = DetailedViewController()
+
+    preview.configure(with: UIImage(imageLiteralResourceName: "deadpool"), name: "Deadpool", description: "Something blablabla")
+
+    return preview
 }
