@@ -42,7 +42,7 @@ extension UIImage {
 }
 
 extension UIImageView {
-    func downoloaded(from url:URL) {
+    func downoloaded(from url: URL) {
         self.kf.indicatorType = .activity
         self.kf.setImage(with: url)
     }

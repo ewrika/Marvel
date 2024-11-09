@@ -164,6 +164,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 
         detailedViewController.configure(with: url, name: hero.name, description: hero.description)
         navigationController?.pushViewController(detailedViewController, animated: true)
+
+        let backImage = Constants.Photo.arrowBack
+        self.navigationController?.navigationBar.backItem?.title = ""
+        self.navigationController?.navigationBar.backIndicatorImage = backImage
+        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backImage
+        self.navigationController?.navigationBar.tintColor = .white
     }
 
 }
