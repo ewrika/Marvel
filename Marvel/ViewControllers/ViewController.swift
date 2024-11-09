@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         layout.scrollDirection = .horizontal
         layout.numberOfVisibleItems = nil
 
-        let collectionView = UICollectionView(frame:.zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.register(HeroCell.self, forCellWithReuseIdentifier: String(describing: HeroCell.self))
         collectionView.isPagingEnabled = true
@@ -128,8 +128,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         let hero = heroList[indexPath.item]
 
-        if let image = UIImage(named: hero.image) {
-            cell.configure(with: image, name: hero.name)
+        if let url = URL(string: hero.url) {
+            cell.configure(with: url, name: hero.name)
         } else {
             print("Hero image \(hero.image) not found")
         }
@@ -157,12 +157,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let hero = heroList[indexPath.item]
 
-        guard let image = UIImage(named: hero.image) else {
-            print("Hero image \(hero.image) not found")
+        guard let url = URL(string: hero.url) else {
+            print("Invalid URL for hero image \(hero.image)")
             return
         }
 
-        detailedViewController.configure(with: image, name: hero.name, description: hero.description)
+        detailedViewController.configure(with: url, name: hero.name, description: hero.description)
         navigationController?.pushViewController(detailedViewController, animated: true)
     }
 

@@ -25,7 +25,7 @@ final class HeroCell: UICollectionViewCell {
     private var view: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .black
+        view.backgroundColor = .cyan
         view.layer.cornerRadius = 20
 
         return view
@@ -84,8 +84,8 @@ final class HeroCell: UICollectionViewCell {
         super.init(coder: coder)
     }
 
-    func configure(with image: UIImage, name: String) {
-        heroImageView.image = image
+    func configure(with url: URL, name: String) {
+        heroImageView.downoloaded(from: url)
         label.text = name
     }
     override func prepareForReuse() {
@@ -101,12 +101,4 @@ extension HeroCell: ScaleTransformView {
     var scaleOptions: ScaleTransformViewOptions {
         .layout(.linear)
     }
-}
-
-#Preview {
-    let cell = HeroCell(frame: CGRect(x: 0, y: 0, width: 300, height: 400))
-
-    cell.configure(with: UIImage(named: "webman")!, name: "Spider Man")
-
-    return cell
 }

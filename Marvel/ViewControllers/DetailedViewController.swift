@@ -13,6 +13,7 @@ class DetailedViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
+        imageView.backgroundColor = .cyan
 
         return imageView
     }()
@@ -46,8 +47,8 @@ class DetailedViewController: UIViewController {
         setupConstraints()
     }
 
-    func configure(with image: UIImage, name: String, description: String) {
-        imageView.image = image
+    func configure(with url: URL, name: String, description: String) {
+        imageView.downoloaded(from: url)
         nameLabel.text = name
         descriptionLabel.text = description
     }
@@ -90,12 +91,4 @@ class DetailedViewController: UIViewController {
             ])
         }
 
-}
-
-#Preview{
-    let preview = DetailedViewController()
-
-    preview.configure(with: UIImage(imageLiteralResourceName: "deadpool"), name: "Deadpool", description: "Something blablabla")
-
-    return preview
 }
