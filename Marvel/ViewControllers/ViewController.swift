@@ -52,7 +52,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Constants.backGround
+        view.backgroundColor = Constants.Color.backGround
 
         addSubviews()
         setupConstraints()
@@ -66,9 +66,8 @@ class ViewController: UIViewController {
 
     private func setInitialPathViewColor() {
         if let firstHero = heroList.first,
-           let firstImage = UIImage(named: firstHero.image),
-           let initialColor = firstImage.averageColor {
-            pathView.color = initialColor
+           let firstImage = UIImage(named: firstHero.image) {
+            pathView.updateColor(from: firstImage)
         }
     }
 
@@ -154,12 +153,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let centerIndex = findCenterIndex()
         let hero = heroList[centerIndex]
 
-        if let image = UIImage(named: hero.image),
-           let averageColor = image.averageColor {
-            pathView.color = averageColor
-        } else {
-            pathView.color = .clear
-        }
+         let image = UIImage(named: hero.image)
+         pathView.updateColor(from: image)
+
     }
 
     private func findCenterIndex() -> Int {
