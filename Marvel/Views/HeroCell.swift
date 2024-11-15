@@ -1,6 +1,7 @@
 import Foundation
 import CollectionViewPagingLayout
 import UIKit
+import Kingfisher
 
 final class HeroCell: UICollectionViewCell {
 
@@ -8,6 +9,7 @@ final class HeroCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        imageView.kf.indicatorType = .activity
 
         return imageView
     }()
@@ -34,7 +36,7 @@ final class HeroCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        setupViewHierarchy()
+        addSubviews()
         setupConstraints()
 
         view.layer.cornerRadius = 15
@@ -42,7 +44,7 @@ final class HeroCell: UICollectionViewCell {
 
     }
 
-    private func setupViewHierarchy() {
+    private func addSubviews() {
         contentView.addSubview(view)
         view.addSubview(heroImageView)
         view.addSubview(label)
@@ -84,10 +86,11 @@ final class HeroCell: UICollectionViewCell {
         super.init(coder: coder)
     }
 
-    func configure(with url: URL, name: String) {
-        heroImageView.downoloaded(from: url)
+    func configure(with image: UIImage, name: String) {
+        heroImageView.image = image
         label.text = name
     }
+
     override func prepareForReuse() {
         super.prepareForReuse()
 

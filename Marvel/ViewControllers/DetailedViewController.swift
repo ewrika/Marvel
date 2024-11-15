@@ -47,8 +47,8 @@ class DetailedViewController: UIViewController {
         setupConstraints()
     }
 
-    func configure(with url: URL, name: String, description: String) {
-        imageView.downoloaded(from: url)
+    func configure(with image: UIImage, name: String, description: String) {
+        imageView.image = image
         nameLabel.text = name
         descriptionLabel.text = description
     }
@@ -89,6 +89,6 @@ class DetailedViewController: UIViewController {
                 descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
                 descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
-        }
+    }
 
 }

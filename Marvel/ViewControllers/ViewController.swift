@@ -2,7 +2,9 @@ import UIKit
 import CollectionViewPagingLayout
 
 class ViewController: UIViewController {
-    var lastIndex = 0
+    private var lastIndex = 0
+    private let viewModel = PhotoViewModel()
+
     private let logoMarvel: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,10 +55,7 @@ class ViewController: UIViewController {
         view.backgroundColor = Constants.backGround
 
         addSubviews()
-        marvelLogoSetup()
-        labelSetup()
-        pathSetup()
-        cellImageSetup()
+        setupConstraints()
 
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
@@ -71,6 +70,13 @@ class ViewController: UIViewController {
            let initialColor = firstImage.averageColor {
             pathView.color = initialColor
         }
+    }
+
+    private func setupConstraints() {
+        marvelLogoSetup()
+        labelSetup()
+        pathSetup()
+        cellImageSetup()
     }
 
     private func addSubviews() {
@@ -129,10 +135,19 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let hero = heroList[indexPath.item]
 
         if let url = URL(string: hero.url) {
-            cell.configure(with: url, name: hero.name)
+            Task {
+                if let image = await ImageLoader.shared.loadImage(from: url) {
+                    DispatchQueue.main.async {
+                        cell.configure(with: image, name: hero.name)
+                    }
+                } else {
+                    print("Failed to load image for \(hero.name)")
+                }
+            }
         } else {
-            print("Hero image \(hero.image) not found")
+            print("Invalid URL for hero image \(hero.name)")
         }
+
         return cell
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -162,14 +177,20 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             return
         }
 
-        detailedViewController.configure(with: url, name: hero.name, description: hero.description)
-        navigationController?.pushViewController(detailedViewController, animated: true)
-
-        let backImage = Constants.Photo.arrowBack
-        self.navigationController?.navigationBar.backItem?.title = ""
-        self.navigationController?.navigationBar.backIndicatorImage = backImage
-        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backImage
-        self.navigationController?.navigationBar.tintColor = .white
+        Task {
+            if let image = await ImageLoader.shared.loadImage(from: url) {
+                DispatchQueue.main.async {
+                    self.detailedViewController.configure(
+                        with: image,
+                        name: hero.name,
+                        description: hero.description
+                    )
+                    self.navigationController?.pushViewController(self.detailedViewController, animated: true)
+                }
+            } else {
+                print("Failed to load image for \(hero.name)")
+            }
+        }
     }
 
 }
