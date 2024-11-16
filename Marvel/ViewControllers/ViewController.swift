@@ -5,14 +5,6 @@ class ViewController: UIViewController {
     private var lastIndex = 0
     private let viewModel = PhotoViewModel()
 
-    private let loadedPercentLabel: UILabel = {
-        let percentLabel = UILabel()
-        percentLabel.textColor = .red
-        percentLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        return percentLabel
-    }()
-
     private let logoMarvel: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,9 +65,17 @@ class ViewController: UIViewController {
     }
 
     private func setInitialPathViewColor() {
-        if let firstHero = heroList.first,
-           let firstImage = UIImage(named: firstHero.image) {
-            pathView.updateColor(from: firstImage)
+        guard let firstHero = heroList.first, let url = URL(string: firstHero.url) else {
+            print("Invalid URL for first hero image")
+            return
+        }
+
+        Task {
+            if let image = await ImageLoader.shared.loadImage(from: url) {
+                DispatchQueue.main.async {
+                    self.pathView.updateColor(from: image)
+                }
+            }
         }
     }
 
@@ -161,8 +161,20 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let centerIndex = findCenterIndex()
         let hero = heroList[centerIndex]
 
-         let image = UIImage(named: hero.image)
-         pathView.updateColor(from: image)
+        guard let url = URL(string: hero.url) else {
+            print("Invalid URL for hero image \(hero.image)")
+            return
+        }
+
+        Task {
+            if let image = await ImageLoader.shared.loadImage(from: url) {
+                DispatchQueue.main.async {
+                    self.pathView.updateColor(from: image)
+                }
+            } else {
+                print("Failed to load image for \(hero.name)")
+            }
+        }
 
     }
 

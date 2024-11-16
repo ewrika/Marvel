@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class PhotoViewModel {
-    func loadImage(from url:URL) async -> UIImage? {
+    func loadImage(from url: URL) async -> UIImage? {
         return await ImageLoader.shared.loadImage(from: url)
     }
 }

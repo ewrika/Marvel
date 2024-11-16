@@ -15,7 +15,7 @@ class ImageLoader {
     private init() {}
 
     func loadImage(from url: URL) async -> UIImage? {
-        return await withCheckedContinuation{ continuation in
+        return await withCheckedContinuation { continuation in
             let resource = ImageResource(downloadURL: url)
 
             KingfisherManager.shared.retrieveImage(with: resource) { result in
