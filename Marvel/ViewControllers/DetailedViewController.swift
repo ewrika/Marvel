@@ -9,6 +9,20 @@ import UIKit
 
 class DetailedViewController: UIViewController {
 
+    private func configureNavigationBar() {
+        let backButton = UIButton(type: .system)
+        backButton.setImage(Constants.Photo.arrowBack, for: .normal)
+        backButton.tintColor = .white
+        backButton.setTitle("", for: .normal)
+
+        let backBarButtonItem = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = backBarButtonItem
+    }
+
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +56,7 @@ class DetailedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-
+        configureNavigationBar()
         addSubviews()
         setupConstraints()
     }

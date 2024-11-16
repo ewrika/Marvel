@@ -5,6 +5,14 @@ class ViewController: UIViewController {
     private var lastIndex = 0
     private let viewModel = PhotoViewModel()
 
+    private let loadedPercentLabel: UILabel = {
+        let percentLabel = UILabel()
+        percentLabel.textColor = .red
+        percentLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        return percentLabel
+    }()
+
     private let logoMarvel: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false

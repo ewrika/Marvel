@@ -30,7 +30,7 @@ final class TrianglePathView: UIView {
         path.close()
         setupColor()
     }
-    
+
     func updateColor(from image:UIImage?){
         if let averageColor = image?.averageColor {
             self.color = averageColor
