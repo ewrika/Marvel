@@ -14,17 +14,17 @@ class ImageLoader {
 
     private init() {}
 
-    func loadImage(from url: URL) async -> UIImage? {
+    func loadImage(from url: URL, placeholder: UIImage? = Constants.Photo.placeHolder) async -> UIImage? {
         return await withCheckedContinuation { continuation in
-            let resource = ImageResource(downloadURL: url)
+            let resource = KF.ImageResource(downloadURL: url)
 
             KingfisherManager.shared.retrieveImage(with: resource) { result in
                 switch result {
                 case .success(let value):
                     continuation.resume(returning: value.image)
                 case .failure(let error):
-                    print("Error: \(error)")
-                    continuation.resume(returning: nil)
+                    print("Error loading image from \(url): \(error.localizedDescription)")
+                    continuation.resume(returning: placeholder)
                 }
             }
         }

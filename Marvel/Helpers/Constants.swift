@@ -21,6 +21,7 @@ enum Constants {
     enum Photo {
         static let marvelLogo = UIImage(named: "marvelLogo")
         static let arrowBack = UIImage(named: "arrowBack")
+        static let placeHolder = UIImage(named:"placeholder")
     }
 
 }

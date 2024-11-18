@@ -1,7 +1,6 @@
 import Foundation
 import CollectionViewPagingLayout
 import UIKit
-import Kingfisher
 
 final class HeroCell: UICollectionViewCell {
 
@@ -9,7 +8,6 @@ final class HeroCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-        imageView.kf.indicatorType = .activity
 
         return imageView
     }()
