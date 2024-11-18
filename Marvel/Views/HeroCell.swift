@@ -4,6 +4,15 @@ import UIKit
 
 final class HeroCell: UICollectionViewCell {
 
+    private var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.color = .white
+        indicator.hidesWhenStopped = true
+        
+        return indicator
+    }()
+
     private lazy var heroImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +34,7 @@ final class HeroCell: UICollectionViewCell {
     private var view: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .cyan
+        view.backgroundColor = .clear
         view.layer.cornerRadius = 20
 
         return view
@@ -46,12 +55,21 @@ final class HeroCell: UICollectionViewCell {
         contentView.addSubview(view)
         view.addSubview(heroImageView)
         view.addSubview(label)
+        view.addSubview(activityIndicator)
     }
 
     private func setupConstraints() {
         setupContainerViewConstraints()
         setupHeroImageViewConstraints()
         setupLabelConstraints()
+        setupActivityIndicatorConstraints()
+    }
+
+    private func setupActivityIndicatorConstraints() {
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     private func setupContainerViewConstraints() {
@@ -84,8 +102,14 @@ final class HeroCell: UICollectionViewCell {
         super.init(coder: coder)
     }
 
-    func configure(with image: UIImage, name: String) {
-        heroImageView.image = image
+    func configure(with image: UIImage?, name: String?) {
+        if let image = image {
+            heroImageView.image = image
+            activityIndicator.stopAnimating()
+        } else {
+            heroImageView.image = nil
+            activityIndicator.startAnimating()
+        }
         label.text = name
     }
 

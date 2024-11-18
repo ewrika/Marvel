@@ -153,6 +153,7 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let hero = viewModel.hero(at: indexPath.item)
 
         if let url = URL(string: hero.url) {
+            cell.configure(with: nil, name: hero.name)
             Task {
                 if let image = await viewModel.loadImage(for: hero) {
                     DispatchQueue.main.async {
