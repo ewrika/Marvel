@@ -1,9 +1,20 @@
 import UIKit
 import CollectionViewPagingLayout
 
-class ViewController: UIViewController {
+class HeroViewController: UIViewController {
     private var lastIndex = 0
-    private let viewModel = PhotoViewModel()
+    private let viewModel: HeroViewModel
+    private let coordinator: Coordinator?
+
+    init(viewModel: HeroViewModel, coordinator: Coordinator) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     private let logoMarvel: UIImageView = {
         let imageView = UIImageView()
@@ -129,9 +140,9 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        heroList.count
+        viewModel.heroes.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -139,11 +150,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
              print("failed")
             return UICollectionViewCell()
         }
-        let hero = heroList[indexPath.item]
+        let hero = viewModel.hero(at: indexPath.item)
 
         if let url = URL(string: hero.url) {
             Task {
-                if let image = await ImageLoader.shared.loadImage(from: url) {
+                if let image = await viewModel.loadImage(for: hero) {
                     DispatchQueue.main.async {
                         cell.configure(with: image, name: hero.name)
                     }
@@ -159,7 +170,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let centerIndex = findCenterIndex()
-        let hero = heroList[centerIndex]
+        let hero = viewModel.hero(at: centerIndex)
 
         guard let url = URL(string: hero.url) else {
             print("Invalid URL for hero image \(hero.image)")
@@ -167,7 +178,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         }
 
         Task {
-            if let image = await ImageLoader.shared.loadImage(from: url) {
+            if let image = await viewModel.loadImage(for: hero) {
                 DispatchQueue.main.async {
                     self.pathView.updateColor(from: image)
                 }
@@ -194,7 +205,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         }
 
         Task {
-            if let image = await ImageLoader.shared.loadImage(from: url) {
+            if let image = await viewModel.loadImage(for: hero) {
                 DispatchQueue.main.async {
                     self.detailedViewController.configure(
                         with: image,
@@ -209,8 +220,4 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
 
-}
-
-#Preview {
-    ViewController()
 }
