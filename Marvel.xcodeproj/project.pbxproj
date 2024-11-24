@@ -12,6 +12,8 @@
 		E822799F2CC59A7500874029 /* HeroCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E822799E2CC59A7500874029 /* HeroCell.swift */; };
 		E8496CD82CF317AD00023275 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8496CD72CF317AD00023275 /* Environment.swift */; };
 		E8496CDC2CF31E8600023275 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E8496CDB2CF31E8600023275 /* Config.xcconfig */; };
+		E8496CE42CF32E0600023275 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E8496CE32CF32E0600023275 /* Alamofire */; };
+		E8496CEA2CF3870C00023275 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8496CE92CF3870C00023275 /* NetworkManager.swift */; };
 		E85779562CE7C71900D6CD67 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85779552CE7C71900D6CD67 /* ImageLoader.swift */; };
 		E85779602CEB3FE400D6CD67 /* HeroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E857795F2CEB3FE400D6CD67 /* HeroViewModel.swift */; };
 		E85779622CEB40C800D6CD67 /* HeroCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85779612CEB40C800D6CD67 /* HeroCoordinator.swift */; };
@@ -29,12 +31,26 @@
 		E8DD581E2CC79DD400C47A36 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DD581D2CC79DD400C47A36 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E8496CE82CF3300B00023275 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		E82279962CC433F800874029 /* HeroModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroModel.swift; sourceTree = "<group>"; };
 		E822799A2CC564FF00874029 /* TrianglePathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrianglePathView.swift; sourceTree = "<group>"; };
 		E822799E2CC59A7500874029 /* HeroCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroCell.swift; sourceTree = "<group>"; };
 		E8496CD72CF317AD00023275 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		E8496CDB2CF31E8600023275 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		E8496CE92CF3870C00023275 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		E85779552CE7C71900D6CD67 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		E857795F2CEB3FE400D6CD67 /* HeroViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroViewModel.swift; sourceTree = "<group>"; };
 		E85779612CEB40C800D6CD67 /* HeroCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroCoordinator.swift; sourceTree = "<group>"; };
@@ -57,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8496CE42CF32E0600023275 /* Alamofire in Frameworks */,
 				E8A888572CDFD3280095BC18 /* Kingfisher in Frameworks */,
 				E8A62A192CD0163E0081A03E /* CollectionViewPagingLayout in Frameworks */,
 			);
@@ -65,6 +82,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E8496CEB2CF3871000023275 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				E8496CE92CF3870C00023275 /* NetworkManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		E85779672CEB4C1100D6CD67 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +143,7 @@
 				E85779672CEB4C1100D6CD67 /* Protocols */,
 				E85779692CEB4C9C00D6CD67 /* ViewModels */,
 				E85779682CEB4C6400D6CD67 /* Coordinators */,
+				E8496CEB2CF3871000023275 /* Manager */,
 				E8B770022CC2B9B900B62000 /* Assets.xcassets */,
 				E8B770042CC2B9B900B62000 /* LaunchScreen.storyboard */,
 				E8B770072CC2B9B900B62000 /* Info.plist */,
@@ -181,6 +207,7 @@
 				E8B76FF22CC2B9B700B62000 /* Sources */,
 				E8B76FF32CC2B9B700B62000 /* Frameworks */,
 				E8B76FF42CC2B9B700B62000 /* Resources */,
+				E8496CE82CF3300B00023275 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -191,6 +218,7 @@
 			packageProductDependencies = (
 				E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */,
 				E8A888562CDFD3280095BC18 /* Kingfisher */,
+				E8496CE32CF32E0600023275 /* Alamofire */,
 			);
 			productName = Marvel;
 			productReference = E8B76FF62CC2B9B700B62000 /* Marvel.app */;
@@ -224,6 +252,7 @@
 				E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */,
 				E8A888502CDCA50E0095BC18 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				E8A888552CDFD3280095BC18 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				E8496CE22CF32E0600023275 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = E8B76FF72CC2B9B700B62000 /* Products */;
 			projectDirPath = "";
@@ -256,6 +285,7 @@
 				E85779662CEB454800D6CD67 /* Coordinator.swift in Sources */,
 				E85779622CEB40C800D6CD67 /* HeroCoordinator.swift in Sources */,
 				E822799B2CC564FF00874029 /* TrianglePathView.swift in Sources */,
+				E8496CEA2CF3870C00023275 /* NetworkManager.swift in Sources */,
 				E8496CD82CF317AD00023275 /* Environment.swift in Sources */,
 				E85779562CE7C71900D6CD67 /* ImageLoader.swift in Sources */,
 				E85779602CEB3FE400D6CD67 /* HeroViewModel.swift in Sources */,
@@ -492,6 +522,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E8496CE22CF32E0600023275 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.1;
+			};
+		};
 		E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ewrika/CollectionViewPagingLayout";
@@ -519,6 +557,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E8496CE32CF32E0600023275 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8496CE22CF32E0600023275 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */;

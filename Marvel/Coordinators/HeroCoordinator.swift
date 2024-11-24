@@ -24,7 +24,7 @@ class HeroCoordinator: Coordinator {
     func showDetails(for hero: HeroModel) {
         let detailedViewController = DetailedViewController()
         detailedViewController.configure(
-            with: UIImage(named: hero.image) ?? UIImage(),
+            with: UIImage(named: hero.imageURL) ?? UIImage(),
             name: hero.name,
             description: hero.description
         )

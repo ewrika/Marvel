@@ -70,19 +70,29 @@ class HeroViewController: UIViewController {
 
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
+        bindViewModel()
+        viewModel.loadHeroes()
+    }
 
-        setInitialPathViewColor()
+    private func bindViewModel() {
+        viewModel.onHeroesUpdated = { [weak self] in
+            self?.collectionView.reloadData()
+            self?.setInitialPathViewColor()
+        }
 
+        viewModel.onError = { error in
+            print("Error loading heroes: \(error.localizedDescription)")
+        }
     }
 
     private func setInitialPathViewColor() {
-        guard let firstHero = heroList.first, let url = URL(string: firstHero.url) else {
-            print("Invalid URL for first hero image")
+        guard let firstHero = viewModel.heroes.first else{
+            print("No Heroes available")
             return
         }
 
         Task {
-            if let image = await ImageLoader.shared.loadImage(from: url) {
+            if let image = await viewModel.loadImage(for: firstHero) {
                 DispatchQueue.main.async {
                     self.pathView.updateColor(from: image)
                 }
@@ -147,12 +157,12 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HeroCell.self), for: indexPath) as? HeroCell else {
-             print("failed")
+            print("failed")
             return UICollectionViewCell()
         }
         let hero = viewModel.hero(at: indexPath.item)
 
-        if let url = URL(string: hero.url) {
+        if let url = URL(string: hero.imageURL) {
             cell.configure(with: nil, name: hero.name)
             Task {
                 if let image = await viewModel.loadImage(for: hero) {
@@ -173,8 +183,8 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let centerIndex = findCenterIndex()
         let hero = viewModel.hero(at: centerIndex)
 
-        guard let url = URL(string: hero.url) else {
-            print("Invalid URL for hero image \(hero.image)")
+        guard let url = URL(string: hero.imageURL) else {
+            print("Invalid URL for hero image \(hero.imageURL)")
             return
         }
 
@@ -198,12 +208,7 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let hero = heroList[indexPath.item]
-
-        guard let url = URL(string: hero.url) else {
-            print("Invalid URL for hero image \(hero.image)")
-            return
-        }
+        let hero = viewModel.hero(at: indexPath.item)
 
         Task {
             if let image = await viewModel.loadImage(for: hero) {
