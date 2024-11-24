@@ -10,6 +10,8 @@
 		E82279972CC433F800874029 /* HeroModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82279962CC433F800874029 /* HeroModel.swift */; };
 		E822799B2CC564FF00874029 /* TrianglePathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E822799A2CC564FF00874029 /* TrianglePathView.swift */; };
 		E822799F2CC59A7500874029 /* HeroCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E822799E2CC59A7500874029 /* HeroCell.swift */; };
+		E8496CD22CF3104200023275 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E8496CD12CF3104200023275 /* Alamofire */; };
+		E8496CD42CF3104200023275 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = E8496CD32CF3104200023275 /* AlamofireDynamic */; };
 		E85779562CE7C71900D6CD67 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85779552CE7C71900D6CD67 /* ImageLoader.swift */; };
 		E85779602CEB3FE400D6CD67 /* HeroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E857795F2CEB3FE400D6CD67 /* HeroViewModel.swift */; };
 		E85779622CEB40C800D6CD67 /* HeroCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85779612CEB40C800D6CD67 /* HeroCoordinator.swift */; };
@@ -53,6 +55,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8496CD22CF3104200023275 /* Alamofire in Frameworks */,
+				E8496CD42CF3104200023275 /* AlamofireDynamic in Frameworks */,
 				E8A888572CDFD3280095BC18 /* Kingfisher in Frameworks */,
 				E8A62A192CD0163E0081A03E /* CollectionViewPagingLayout in Frameworks */,
 			);
@@ -185,6 +189,8 @@
 			packageProductDependencies = (
 				E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */,
 				E8A888562CDFD3280095BC18 /* Kingfisher */,
+				E8496CD12CF3104200023275 /* Alamofire */,
+				E8496CD32CF3104200023275 /* AlamofireDynamic */,
 			);
 			productName = Marvel;
 			productReference = E8B76FF62CC2B9B700B62000 /* Marvel.app */;
@@ -218,6 +224,7 @@
 				E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */,
 				E8A888502CDCA50E0095BC18 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				E8A888552CDFD3280095BC18 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				E8496CD02CF3104200023275 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = E8B76FF72CC2B9B700B62000 /* Products */;
 			projectDirPath = "";
@@ -480,6 +487,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E8496CD02CF3104200023275 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.1;
+			};
+		};
 		E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ewrika/CollectionViewPagingLayout";
@@ -507,6 +522,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E8496CD12CF3104200023275 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8496CD02CF3104200023275 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		E8496CD32CF3104200023275 /* AlamofireDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8496CD02CF3104200023275 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = AlamofireDynamic;
+		};
 		E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */;
