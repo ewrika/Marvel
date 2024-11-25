@@ -131,13 +131,15 @@ class HeroViewController: UIViewController {
             return
         }
 
-        Task {
-            if let image = await viewModel.loadImage(for: firstHero) {
+        Task { [weak self] in
+            guard let self = self else { return }
+            if let image = await self.viewModel.loadImage(for: firstHero) {
                 DispatchQueue.main.async {
                     self.pathView.updateColor(from: image)
                 }
             }
         }
+
     }
 
     private func showLoader() {
@@ -258,7 +260,8 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return
         }
 
-        Task {
+        Task { [weak self] in
+            guard let self = self else { return }
             if let image = await viewModel.loadImage(for: hero) {
                 DispatchQueue.main.async {
                     self.pathView.updateColor(from: image)
