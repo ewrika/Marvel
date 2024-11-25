@@ -14,6 +14,7 @@ class DetailedViewController: UIViewController {
         backButton.setImage(Constants.Photo.arrowBack, for: .normal)
         backButton.tintColor = .white
         backButton.setTitle("", for: .normal)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
 
         let backBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = backBarButtonItem
@@ -26,8 +27,9 @@ class DetailedViewController: UIViewController {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .cyan
+        imageView.clipsToBounds = true
 
         return imageView
     }()
