@@ -5,6 +5,7 @@ class HeroViewController: UIViewController {
     private var lastIndex = 0
     private let viewModel: HeroViewModel
     private let coordinator: Coordinator?
+    private let detailedViewController = DetailedViewController()
 
     init(viewModel: HeroViewModel, coordinator: Coordinator) {
         self.viewModel = viewModel
@@ -15,6 +16,24 @@ class HeroViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    private let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [
+            .foregroundColor: UIColor.white
+        ])
+
+        return refreshControl
+    }()
+
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.alwaysBounceVertical = true
+
+        return scrollView
+    }()
 
     private let logoMarvel: UIImageView = {
         let imageView = UIImageView()
@@ -59,8 +78,6 @@ class HeroViewController: UIViewController {
         return collectionView
     }()
 
-    private let detailedViewController = DetailedViewController()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Constants.Color.backGround
@@ -70,17 +87,27 @@ class HeroViewController: UIViewController {
 
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
+        
         bindViewModel()
+        viewModel.loadHeroes()
+
+        scrollView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshHeroes), for: .valueChanged)
+    }
+
+    @objc private func refreshHeroes() {
         viewModel.loadHeroes()
     }
 
     private func bindViewModel() {
         viewModel.onHeroesUpdated = { [weak self] in
             self?.collectionView.reloadData()
+            self?.refreshControl.endRefreshing()
             self?.setInitialPathViewColor()
         }
 
-        viewModel.onError = { error in
+        viewModel.onError = { [weak self] error in
+            self?.refreshControl.endRefreshing()
             print("Error loading heroes: \(error.localizedDescription)")
         }
     }
@@ -101,6 +128,7 @@ class HeroViewController: UIViewController {
     }
 
     private func setupConstraints() {
+        scrollViewSetup()
         marvelLogoSetup()
         labelSetup()
         pathSetup()
@@ -108,10 +136,20 @@ class HeroViewController: UIViewController {
     }
 
     private func addSubviews() {
-        view.addSubview(logoMarvel)
-        view.addSubview(label)
-        view.addSubview(pathView)
-        view.addSubview(collectionView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(logoMarvel)
+        scrollView.addSubview(label)
+        scrollView.addSubview(pathView)
+        scrollView.addSubview(collectionView)
+    }
+    
+    private func scrollViewSetup(){
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 
     private func marvelLogoSetup() {
