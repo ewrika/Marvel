@@ -17,6 +17,15 @@ class HeroViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.color = .white
+        indicator.hidesWhenStopped = true
+
+        return indicator
+    }()
+
     private let refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .white
@@ -87,7 +96,8 @@ class HeroViewController: UIViewController {
 
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
-        
+
+        showLoader()
         bindViewModel()
         viewModel.loadHeroes()
 
@@ -96,6 +106,7 @@ class HeroViewController: UIViewController {
     }
 
     @objc private func refreshHeroes() {
+        showLoader()
         viewModel.loadHeroes()
     }
 
@@ -104,16 +115,18 @@ class HeroViewController: UIViewController {
             self?.collectionView.reloadData()
             self?.refreshControl.endRefreshing()
             self?.setInitialPathViewColor()
+            self?.hideLoader()
         }
 
         viewModel.onError = { [weak self] error in
             self?.refreshControl.endRefreshing()
+            self?.hideLoader()
             print("Error loading heroes: \(error.localizedDescription)")
         }
     }
 
     private func setInitialPathViewColor() {
-        guard let firstHero = viewModel.heroes.first else{
+        guard let firstHero = viewModel.heroes.first else {
             print("No Heroes available")
             return
         }
@@ -127,12 +140,23 @@ class HeroViewController: UIViewController {
         }
     }
 
+    private func showLoader() {
+        activityIndicator.startAnimating()
+        view.isUserInteractionEnabled = false
+    }
+
+    private func hideLoader() {
+        activityIndicator.stopAnimating()
+        view.isUserInteractionEnabled = true
+    }
+
     private func setupConstraints() {
         scrollViewSetup()
         marvelLogoSetup()
         labelSetup()
         pathSetup()
         cellImageSetup()
+        activityIndicatorSetup()
     }
 
     private func addSubviews() {
@@ -141,9 +165,17 @@ class HeroViewController: UIViewController {
         scrollView.addSubview(label)
         scrollView.addSubview(pathView)
         scrollView.addSubview(collectionView)
+        view.addSubview(activityIndicator)
     }
-    
-    private func scrollViewSetup(){
+
+    private func activityIndicatorSetup() {
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+
+    private func scrollViewSetup() {
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
