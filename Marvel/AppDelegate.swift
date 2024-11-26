@@ -12,11 +12,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
-        window?.rootViewController = ViewController()
+
+        let navigationController = UINavigationController()
+        let appCoordinator = AppCoordinator(navigationController: navigationController)
+
+        appCoordinator.start() // Это запустит нужный экран
+
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+
         return true
     }
 

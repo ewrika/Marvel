@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 enum Constants {
-    static var deadPool = UIColor(hex: "#991518") ?? UIColor.red
-    static var ironMan = UIColor(hex: "#FFD700") ?? UIColor.yellow
-    static var spiderMan = UIColor(hex: "#0000FF") ?? UIColor.blue
-    static var backGround = UIColor(hex: "2B262B") ?? UIColor.black
+
+    enum Color {
+        static var backGround = UIColor(hex: "2B262B") ?? UIColor.black
+    }
 
     enum Text {
         static let chooseHero = "Choose your hero"
@@ -20,6 +20,8 @@ enum Constants {
 
     enum Photo {
         static let marvelLogo = UIImage(named: "marvelLogo")
+        static let arrowBack = UIImage(named: "arrowBack")
+        static let placeHolder = UIImage(named:"placeholder")
     }
 
 }

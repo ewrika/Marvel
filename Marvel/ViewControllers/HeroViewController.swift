@@ -1,8 +1,21 @@
 import UIKit
 import CollectionViewPagingLayout
 
-class ViewController: UIViewController {
-    var lastIndex = 0
+class HeroViewController: UIViewController {
+    private var lastIndex = 0
+    private let viewModel: HeroViewModel
+    private let coordinator: Coordinator?
+
+    init(viewModel: HeroViewModel, coordinator: Coordinator) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private let logoMarvel: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +48,7 @@ class ViewController: UIViewController {
         layout.scrollDirection = .horizontal
         layout.numberOfVisibleItems = nil
 
-        let collectionView = UICollectionView(frame: .zero,collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.register(HeroCell.self, forCellWithReuseIdentifier: String(describing: HeroCell.self))
         collectionView.isPagingEnabled = true
@@ -46,15 +59,14 @@ class ViewController: UIViewController {
         return collectionView
     }()
 
+    private let detailedViewController = DetailedViewController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Constants.backGround
+        view.backgroundColor = Constants.Color.backGround
 
         addSubviews()
-        marvelLogoSetup()
-        labelSetup()
-        pathSetup()
-        cellImageSetup()
+        setupConstraints()
 
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
@@ -64,11 +76,25 @@ class ViewController: UIViewController {
     }
 
     private func setInitialPathViewColor() {
-        if let firstHero = heroList.first,
-           let firstImage = UIImage(named: firstHero.image),
-           let initialColor = firstImage.averageColor {
-            pathView.color = initialColor
+        guard let firstHero = heroList.first, let url = URL(string: firstHero.url) else {
+            print("Invalid URL for first hero image")
+            return
         }
+
+        Task {
+            if let image = await ImageLoader.shared.loadImage(from: url) {
+                DispatchQueue.main.async {
+                    self.pathView.updateColor(from: image)
+                }
+            }
+        }
+    }
+
+    private func setupConstraints() {
+        marvelLogoSetup()
+        labelSetup()
+        pathSetup()
+        cellImageSetup()
     }
 
     private func addSubviews() {
@@ -114,9 +140,9 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        heroList.count
+        viewModel.heroes.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -124,25 +150,44 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
              print("failed")
             return UICollectionViewCell()
         }
-        let hero = heroList[indexPath.item]
+        let hero = viewModel.hero(at: indexPath.item)
 
-        if let image = UIImage(named: hero.image) {
-            cell.configure(with: image, name: hero.name)
+        if let url = URL(string: hero.url) {
+            cell.configure(with: nil, name: hero.name)
+            Task {
+                if let image = await viewModel.loadImage(for: hero) {
+                    DispatchQueue.main.async {
+                        cell.configure(with: image, name: hero.name)
+                    }
+                } else {
+                    print("Failed to load image for \(hero.name)")
+                }
+            }
         } else {
-            print("Hero image \(hero.image) not found")
+            print("Invalid URL for hero image \(hero.name)")
         }
+
         return cell
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let centerIndex = findCenterIndex()
-        let hero = heroList[centerIndex]
+        let hero = viewModel.hero(at: centerIndex)
 
-        if let image = UIImage(named: hero.image),
-           let averageColor = image.averageColor {
-            pathView.color = averageColor
-        } else {
-            pathView.color = .clear
+        guard let url = URL(string: hero.url) else {
+            print("Invalid URL for hero image \(hero.image)")
+            return
         }
+
+        Task {
+            if let image = await viewModel.loadImage(for: hero) {
+                DispatchQueue.main.async {
+                    self.pathView.updateColor(from: image)
+                }
+            } else {
+                print("Failed to load image for \(hero.name)")
+            }
+        }
+
     }
 
     private func findCenterIndex() -> Int {
@@ -151,8 +196,29 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         lastIndex = index?.item ?? lastIndex
         return lastIndex
     }
-}
 
-#Preview {
-    ViewController()
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let hero = heroList[indexPath.item]
+
+        guard let url = URL(string: hero.url) else {
+            print("Invalid URL for hero image \(hero.image)")
+            return
+        }
+
+        Task {
+            if let image = await viewModel.loadImage(for: hero) {
+                DispatchQueue.main.async {
+                    self.detailedViewController.configure(
+                        with: image,
+                        name: hero.name,
+                        description: hero.description
+                    )
+                    self.navigationController?.pushViewController(self.detailedViewController, animated: true)
+                }
+            } else {
+                print("Failed to load image for \(hero.name)")
+            }
+        }
+    }
+
 }
