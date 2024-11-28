@@ -11,13 +11,13 @@ import Kingfisher
 
 class ImageLoader {
     static let shared = ImageLoader()
-    
+
     private init() {}
-    
+
     func loadImage(from url: URL, placeholder: UIImage? = Constants.Photo.placeHolder) async -> UIImage? {
         return await withCheckedContinuation { continuation in
             let resource = KF.ImageResource(downloadURL: url)
-            
+
             KingfisherManager.shared.retrieveImage(with: resource) { result in
                 switch result {
                 case .success(let value):

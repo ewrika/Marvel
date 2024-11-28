@@ -13,17 +13,32 @@ struct HeroModel: Decodable {
     let name: String
     let description: String
     let thumbnail: Thumbnail
-    
-    var imageURL: String {
-        return thumbnail.fullPath
+
+    var imageURL: URL? {
+        return URL(string:thumbnail.fullPath)
     }
 }
 
 struct Thumbnail: Decodable {
     let path: String
     let `extension`: String
-    
+
     var fullPath: String {
         return "\(path).\(self.extension)"
     }
+}
+
+struct CharacterResponse: Decodable {
+    let data: CharacterData
+}
+
+struct CharacterData: Decodable {
+    let results: [HeroModel]
+}
+
+struct Character: Decodable {
+    let id: Int
+    let name: String
+    let description: String
+    let thumbnail: Thumbnail
 }
