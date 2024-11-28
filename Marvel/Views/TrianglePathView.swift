@@ -15,12 +15,12 @@ final class TrianglePathView: UIView {
             setNeedsDisplay()
         }
     }
-
+    
     private func setupColor() {
         color.setFill()
         path.fill()
     }
-
+    
     override func draw(_ rect: CGRect) {
         path.removeAllPoints()
         path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
@@ -30,7 +30,7 @@ final class TrianglePathView: UIView {
         path.close()
         setupColor()
     }
-
+    
     func updateColor(from image: UIImage?) {
         if let averageColor = image?.averageColor {
             self.color = averageColor

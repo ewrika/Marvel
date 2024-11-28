@@ -10,17 +10,17 @@ import UIKit
 
 class HeroCoordinator: Coordinator {
     var navigationController: UINavigationController
-
+    
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-
+    
     func start() {
         let viewModel = HeroViewModel()
         let heroViewController = HeroViewController(viewModel: viewModel, coordinator: self)
         navigationController.pushViewController(heroViewController, animated: true)
     }
-
+    
     func showDetails(for hero: HeroModel) {
         let detailedViewController = DetailedViewController()
         detailedViewController.configure(

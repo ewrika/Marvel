@@ -11,7 +11,7 @@ public enum Environment {
     enum Keys {
         static let apiKey = "API_KEY"
     }
-
+    
     private static let infoDictionary: [String: Any] = {
         guard let dict = Bundle.main.infoDictionary else {
             assertionFailure("Plist file not found")
@@ -19,7 +19,7 @@ public enum Environment {
         }
         return dict
     }()
-
+    
     static let apiKey: String = {
         guard let apiKeyString = Environment.infoDictionary[Keys.apiKey] as? String else {
             return("Api key not set in plist")

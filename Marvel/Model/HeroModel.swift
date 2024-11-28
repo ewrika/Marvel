@@ -13,7 +13,7 @@ struct HeroModel: Decodable {
     let name: String
     let description: String
     let thumbnail: Thumbnail
-
+    
     var imageURL: String {
         return thumbnail.fullPath
     }
@@ -22,7 +22,7 @@ struct HeroModel: Decodable {
 struct Thumbnail: Decodable {
     let path: String
     let `extension`: String
-
+    
     var fullPath: String {
         return "\(path).\(self.extension)"
     }
