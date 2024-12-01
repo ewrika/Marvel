@@ -30,7 +30,7 @@ class HeroViewModel {
             switch result {
             case .success(let fetchedHeroes):
                 print("Answer from server: \(fetchedHeroes.count) heroes")
-                self?.heroes = fetchedHeroes
+                self?.heroes.append(contentsOf: fetchedHeroes)
                 DispatchQueue.main.async {
                     self?.onHeroesUpdated?()
                     self?.onStateChanged?(.loaded)

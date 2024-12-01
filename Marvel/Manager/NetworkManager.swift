@@ -16,7 +16,8 @@ class NetworkManager {
     private let baseURL = "https://gateway.marvel.com/v1/public/"
     private let publicKey = "821e30f927f46bcbb34c5ccd31b654dd"
     private let privateKey = "\(Environment.apiKey)"
-
+    private var offset = 0
+    private var limit = 20
     private func generateHash(timestamp: String) -> String {
         let hashString = "\(timestamp)\(privateKey)\(publicKey)"
         return Insecure.MD5.hash(data: hashString.data(using: .utf8)!)
@@ -33,7 +34,9 @@ class NetworkManager {
         let parameters: Parameters = [
             "ts": timestamp,
             "apikey": publicKey,
-            "hash": hash
+            "hash": hash,
+            "offset": offset,
+            "limit": limit
         ]
 
         AF.request(url, parameters: parameters).validate().responseDecodable(of: CharacterResponse.self) { response in
@@ -47,6 +50,7 @@ class NetworkManager {
                         thumbnail: character.thumbnail
                     )
                 }
+                self.offset += self.limit
                 completion(.success(heroes))
             case .failure(let error):
                 completion(.failure(NetworkError.error))

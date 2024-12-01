@@ -6,6 +6,7 @@ class HeroViewController: UIViewController {
     private let viewModel: HeroViewModel
     private let coordinator: Coordinator?
     private let detailedViewController = DetailedViewController()
+    private var isLoadingMoreHeroes = false
 
     enum ViewState {
         case loading
@@ -22,7 +23,7 @@ class HeroViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func showErrorMessage() {
         let alert = UIAlertController(
             title: "Произошла ошибка",
@@ -300,7 +301,6 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return UICollectionViewCell()
         }
         let hero = viewModel.hero(at: indexPath.item)
-
             cell.configure(with: nil, name: hero.name)
             Task {
                 if let image = await viewModel.loadImage(for: hero) {
@@ -329,6 +329,23 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
         }
 
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard !viewModel.heroes.isEmpty else { return }
+
+        let offsetX = scrollView.contentOffset.x
+        let contentWidth = scrollView.contentSize.width
+        let frameWidth = scrollView.frame.width
+
+        if offsetX > contentWidth - frameWidth * 2 && !isLoadingMoreHeroes {
+            isLoadingMoreHeroes = true
+            viewModel.loadHeroes()
+            viewModel.onHeroesUpdated = {
+                self.collectionView.reloadData()
+                self.isLoadingMoreHeroes = false
+            }
+        }
     }
 
     private func findCenterIndex() -> Int {
