@@ -15,7 +15,7 @@ struct HeroModel: Decodable {
     let thumbnail: Thumbnail
 
     var imageURL: URL? {
-        return URL(string:thumbnail.fullPath)
+        return URL(string: thumbnail.fullPath)
     }
 }
 

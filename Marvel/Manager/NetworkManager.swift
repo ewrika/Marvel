@@ -25,9 +25,7 @@ class NetworkManager {
     }
 
     func fetchCharacters(completion: @escaping (Result<[HeroModel], Error>) -> Void) {
-        
 
-        
         let timestamp = "\(Date().timeIntervalSince1970)"
         let hash = generateHash(timestamp: timestamp)
         let url = "\(baseURL)characters"

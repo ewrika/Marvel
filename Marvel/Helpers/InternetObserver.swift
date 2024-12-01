@@ -12,14 +12,18 @@ class InternetObserver {
     static let shared = InternetObserver()
     private let monitor = NWPathMonitor()
     private let queue = DispatchQueue.global(qos: .background)
-    
-    var isConnected:Bool = true
-    
+
+    var isConnected: Bool?
+
     private init() {
         monitor.pathUpdateHandler = { path in
-            self.isConnected = path.status == .satisfied
+            if path.status == .satisfied {
+                print("Internet connection is available.")
+            } else {
+                print("Internet connection is not available.")
+            }
         }
         monitor.start(queue: queue)
     }
-    
+
 }

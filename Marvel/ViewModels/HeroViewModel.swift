@@ -16,7 +16,6 @@ class HeroViewModel {
     var onError: ((Error) -> Void)?
     var onStateChanged: ((HeroViewController.ViewState) -> Void)?
 
-
     init(networkManager: NetworkManager = NetworkManager.shared) {
         self.networkManager = networkManager
     }

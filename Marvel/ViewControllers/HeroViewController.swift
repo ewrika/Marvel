@@ -22,7 +22,16 @@ class HeroViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    private func showErrorMessage() {
+        let alert = UIAlertController(
+            title: "Произошла ошибка",
+            message: "Попробуйте повторить попытку позже.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true)
+    }
 
     private let blurEffectView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .dark)
@@ -105,18 +114,43 @@ class HeroViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Constants.Color.backGround
+        setupView()
+        setupCollectionView()
+        setupRefreshControl()
 
-        addSubviews()
-        setupConstraints()
+        viewModel.onStateChanged = { [weak self] state in
+            guard let self = self else {return}
+            switch state {
+            case .loading:
+                showLoader()
+            case .loaded:
+                hideLoader()
+                collectionView.reloadData()
+                refreshControl.endRefreshing()
+            case .offline:
+                self.hideLoader()
+                self.refreshControl.endRefreshing()
+                showErrorMessage()
+            }
 
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
+        }
 
-        showLoader()
         bindViewModel()
         viewModel.loadHeroes()
+    }
 
+    private func setupView() {
+        view.backgroundColor = Constants.Color.backGround
+        addSubviews()
+        setupConstraints()
+    }
+
+    private func setupCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+
+    private func setupRefreshControl() {
         scrollView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshHeroes), for: .valueChanged)
     }
@@ -209,7 +243,6 @@ class HeroViewController: UIViewController {
             blurEffectView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
-
 
     private func scrollViewSetup() {
         NSLayoutConstraint.activate([
