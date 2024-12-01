@@ -25,6 +25,9 @@ class NetworkManager {
     }
 
     func fetchCharacters(completion: @escaping (Result<[HeroModel], Error>) -> Void) {
+        
+
+        
         let timestamp = "\(Date().timeIntervalSince1970)"
         let hash = generateHash(timestamp: timestamp)
         let url = "\(baseURL)characters"
@@ -48,9 +51,22 @@ class NetworkManager {
                 }
                 completion(.success(heroes))
             case .failure(let error):
-                completion(.failure(error))
+                completion(.failure(NetworkError.error))
             }
         }
     }
 }
 
+enum NetworkError: Error, LocalizedError {
+    case noInternet
+    case error
+
+    var errorDescription: String? {
+        switch self {
+        case .noInternet:
+            return "Отсутсвует интернет подключение"
+        case .error:
+            return "Произошла ошибка, попробуйте позже."
+        }
+    }
+}

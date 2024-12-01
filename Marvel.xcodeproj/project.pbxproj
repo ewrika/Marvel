@@ -19,6 +19,7 @@
 		E85779622CEB40C800D6CD67 /* HeroCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85779612CEB40C800D6CD67 /* HeroCoordinator.swift */; };
 		E85779642CEB44E200D6CD67 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85779632CEB44E200D6CD67 /* AppCoordinator.swift */; };
 		E85779662CEB454800D6CD67 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85779652CEB454800D6CD67 /* Coordinator.swift */; };
+		E868B7EE2CFC68880051B759 /* InternetObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E868B7ED2CFC68880051B759 /* InternetObserver.swift */; };
 		E8A62A192CD0163E0081A03E /* CollectionViewPagingLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */; };
 		E8A888542CDE8F640095BC18 /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A888532CDE8F640095BC18 /* DetailedViewController.swift */; };
 		E8A888572CDFD3280095BC18 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E8A888562CDFD3280095BC18 /* Kingfisher */; };
@@ -56,6 +57,7 @@
 		E85779612CEB40C800D6CD67 /* HeroCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroCoordinator.swift; sourceTree = "<group>"; };
 		E85779632CEB44E200D6CD67 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E85779652CEB454800D6CD67 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		E868B7ED2CFC68880051B759 /* InternetObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetObserver.swift; sourceTree = "<group>"; };
 		E8A888532CDE8F640095BC18 /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
 		E8B76FF62CC2B9B700B62000 /* Marvel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marvel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8B76FF92CC2B9B700B62000 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				E8DD581F2CC79DDE00C47A36 /* Extensions */,
 				E8496CD72CF317AD00023275 /* Environment.swift */,
 				E8496CDB2CF31E8600023275 /* Config.xcconfig */,
+				E868B7ED2CFC68880051B759 /* InternetObserver.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				E8A888542CDE8F640095BC18 /* DetailedViewController.swift in Sources */,
 				E822799F2CC59A7500874029 /* HeroCell.swift in Sources */,
 				E8B76FFC2CC2B9B700B62000 /* SceneDelegate.swift in Sources */,
+				E868B7EE2CFC68880051B759 /* InternetObserver.swift in Sources */,
 				E8DD581A2CC79D7B00C47A36 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

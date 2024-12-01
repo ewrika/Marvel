@@ -7,6 +7,12 @@ class HeroViewController: UIViewController {
     private let coordinator: Coordinator?
     private let detailedViewController = DetailedViewController()
 
+    enum ViewState {
+        case loading
+        case loaded
+        case offline
+    }
+
     init(viewModel: HeroViewModel, coordinator: Coordinator) {
         self.viewModel = viewModel
         self.coordinator = coordinator
@@ -16,6 +22,16 @@ class HeroViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+
+    private let blurEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let effectView = UIVisualEffectView(effect: blurEffect)
+        effectView.translatesAutoresizingMaskIntoConstraints = false
+        effectView.alpha = 0
+
+        return effectView
+    }()
 
     private var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
@@ -111,16 +127,16 @@ class HeroViewController: UIViewController {
     }
 
     private func bindViewModel() {
-        viewModel.onHeroesUpdated = { [weak self] in
-            self?.collectionView.reloadData()
-            self?.refreshControl.endRefreshing()
-            self?.setInitialPathViewColor()
-            self?.hideLoader()
+        viewModel.onHeroesUpdated = {
+            self.collectionView.reloadData()
+            self.refreshControl.endRefreshing()
+            self.setInitialPathViewColor()
+            self.hideLoader()
         }
 
-        viewModel.onError = { [weak self] error in
-            self?.refreshControl.endRefreshing()
-            self?.hideLoader()
+        viewModel.onError = {  error in
+            self.refreshControl.endRefreshing()
+            self.hideLoader()
             print("Error loading heroes: \(error.localizedDescription)")
         }
     }
@@ -145,11 +161,17 @@ class HeroViewController: UIViewController {
     private func showLoader() {
         activityIndicator.startAnimating()
         view.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.3) {
+            self.blurEffectView.alpha = 1
+        }
     }
 
     private func hideLoader() {
         activityIndicator.stopAnimating()
         view.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.3) {
+            self.blurEffectView.alpha = 0
+        }
     }
 
     private func setupConstraints() {
@@ -158,6 +180,7 @@ class HeroViewController: UIViewController {
         labelSetup()
         pathSetup()
         cellImageSetup()
+        blurEffectViewSetup()
         activityIndicatorSetup()
     }
 
@@ -167,6 +190,7 @@ class HeroViewController: UIViewController {
         scrollView.addSubview(label)
         scrollView.addSubview(pathView)
         scrollView.addSubview(collectionView)
+        view.addSubview(blurEffectView)
         view.addSubview(activityIndicator)
     }
 
@@ -176,6 +200,16 @@ class HeroViewController: UIViewController {
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
+
+    private func blurEffectViewSetup() {
+        NSLayoutConstraint.activate([
+            blurEffectView.topAnchor.constraint(equalTo: view.topAnchor),
+            blurEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            blurEffectView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            blurEffectView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+
 
     private func scrollViewSetup() {
         NSLayoutConstraint.activate([

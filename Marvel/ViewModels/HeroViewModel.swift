@@ -14,6 +14,8 @@ class HeroViewModel {
 
     var onHeroesUpdated: (() -> Void)?
     var onError: ((Error) -> Void)?
+    var onStateChanged: ((HeroViewController.ViewState) -> Void)?
+
 
     init(networkManager: NetworkManager = NetworkManager.shared) {
         self.networkManager = networkManager
@@ -24,24 +26,30 @@ class HeroViewModel {
     }
 
     func loadHeroes() {
+        onStateChanged?(.loading)
         networkManager.fetchCharacters { [weak self] result in
             switch result {
             case .success(let fetchedHeroes):
-                print("Ответ получен: \(fetchedHeroes.count) героев")
+                print("Answer from server: \(fetchedHeroes.count) heroes")
                 self?.heroes = fetchedHeroes
                 DispatchQueue.main.async {
                     self?.onHeroesUpdated?()
+                    self?.onStateChanged?(.loaded)
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self?.onError?(error)
+                    self?.onStateChanged?(.offline)
                 }
             }
         }
     }
 
     func loadImage(for hero: HeroModel) async -> UIImage? {
-        guard let url = hero.imageURL else { return nil }
+        guard let url = hero.imageURL else {
+            print("Failed to load image for \(hero.name)")
+            return Constants.Photo.placeHolder
+        }
         return await ImageLoader.shared.loadImage(from: url)
     }
 }

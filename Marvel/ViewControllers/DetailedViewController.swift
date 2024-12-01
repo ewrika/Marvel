@@ -15,13 +15,11 @@ class DetailedViewController: UIViewController {
         backButton.tintColor = .white
         backButton.setTitle("", for: .normal)
         backButton.addAction(UIAction {  _ in
-            self.navigationController?.popViewController(animated: true)
-        }, for: .touchUpInside)
+            self.navigationController?.popViewController(animated: true) }, for: .touchUpInside)
 
         let backBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = backBarButtonItem
     }
-
 
     private let imageView: UIImageView = {
         let imageView = UIImageView()
