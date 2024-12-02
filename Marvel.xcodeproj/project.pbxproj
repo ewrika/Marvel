@@ -20,6 +20,9 @@
 		E85779642CEB44E200D6CD67 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85779632CEB44E200D6CD67 /* AppCoordinator.swift */; };
 		E85779662CEB454800D6CD67 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85779652CEB454800D6CD67 /* Coordinator.swift */; };
 		E868B7EE2CFC68880051B759 /* InternetObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E868B7ED2CFC68880051B759 /* InternetObserver.swift */; };
+		E868B7F52CFCEEB40051B759 /* RealmBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E868B7F42CFCEEB40051B759 /* RealmBase.swift */; };
+		E868B80A2CFE35C10051B759 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E868B8092CFE35C10051B759 /* RealmSwift */; };
+		E868B80B2CFE35ED0051B759 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = E868B8092CFE35C10051B759 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E8A62A192CD0163E0081A03E /* CollectionViewPagingLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */; };
 		E8A888542CDE8F640095BC18 /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A888532CDE8F640095BC18 /* DetailedViewController.swift */; };
 		E8A888572CDFD3280095BC18 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E8A888562CDFD3280095BC18 /* Kingfisher */; };
@@ -39,6 +42,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				E868B80B2CFE35ED0051B759 /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -58,6 +62,7 @@
 		E85779632CEB44E200D6CD67 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E85779652CEB454800D6CD67 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		E868B7ED2CFC68880051B759 /* InternetObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetObserver.swift; sourceTree = "<group>"; };
+		E868B7F42CFCEEB40051B759 /* RealmBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmBase.swift; sourceTree = "<group>"; };
 		E8A888532CDE8F640095BC18 /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
 		E8B76FF62CC2B9B700B62000 /* Marvel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marvel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8B76FF92CC2B9B700B62000 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E868B80A2CFE35C10051B759 /* RealmSwift in Frameworks */,
 				E8496CE42CF32E0600023275 /* Alamofire in Frameworks */,
 				E8A888572CDFD3280095BC18 /* Kingfisher in Frameworks */,
 				E8A62A192CD0163E0081A03E /* CollectionViewPagingLayout in Frameworks */,
@@ -157,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				E82279962CC433F800874029 /* HeroModel.swift */,
+				E868B7F42CFCEEB40051B759 /* RealmBase.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -222,6 +229,7 @@
 				E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */,
 				E8A888562CDFD3280095BC18 /* Kingfisher */,
 				E8496CE32CF32E0600023275 /* Alamofire */,
+				E868B8092CFE35C10051B759 /* RealmSwift */,
 			);
 			productName = Marvel;
 			productReference = E8B76FF62CC2B9B700B62000 /* Marvel.app */;
@@ -256,6 +264,7 @@
 				E8A888502CDCA50E0095BC18 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				E8A888552CDFD3280095BC18 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				E8496CE22CF32E0600023275 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				E868B7EF2CFCD80D0051B759 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = E8B76FF72CC2B9B700B62000 /* Products */;
 			projectDirPath = "";
@@ -292,6 +301,7 @@
 				E8496CD82CF317AD00023275 /* Environment.swift in Sources */,
 				E85779562CE7C71900D6CD67 /* ImageLoader.swift in Sources */,
 				E85779602CEB3FE400D6CD67 /* HeroViewModel.swift in Sources */,
+				E868B7F52CFCEEB40051B759 /* RealmBase.swift in Sources */,
 				E85779642CEB44E200D6CD67 /* AppCoordinator.swift in Sources */,
 				E8B76FFE2CC2B9B700B62000 /* HeroViewController.swift in Sources */,
 				E82279972CC433F800874029 /* HeroModel.swift in Sources */,
@@ -534,6 +544,14 @@
 				minimumVersion = 5.10.1;
 			};
 		};
+		E868B7EF2CFCD80D0051B759 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		E8A62A172CD0163E0081A03E /* XCRemoteSwiftPackageReference "CollectionViewPagingLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ewrika/CollectionViewPagingLayout";
@@ -565,6 +583,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E8496CE22CF32E0600023275 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		E868B8092CFE35C10051B759 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E868B7EF2CFCD80D0051B759 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */ = {
 			isa = XCSwiftPackageProductDependency;
