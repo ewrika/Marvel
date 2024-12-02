@@ -52,14 +52,34 @@ class RealmBaseManager {
     }
 
     // GET HEROES
-    func getAllHeroes() -> [RealmHeroListModel] {
+    func getAllHeroes() -> [HeroModel] {
         guard let realm = realm else {
             print("Failed to initialize Realm")
             return []
         }
 
-        let heroes = realm.objects(RealmHeroListModel.self)
+        let realmHeroes = realm.objects(RealmHeroListModel.self)
+
+        let heroes = realmHeroes.compactMap { realmHero -> HeroModel? in
+            guard let thumbnail = parseThumbnail(from: realmHero.thumbnail) else {
+                print("Failed to parse thumbnail for hero \(realmHero.name)")
+                return nil
+            }
+            return HeroModel(
+                id: realmHero.heroID,
+                name: realmHero.name,
+                description: realmHero.descript,
+                thumbnail: thumbnail
+            )
+        }
         return Array(heroes)
     }
-
 }
+    // Helper method to parse the Thumbnail object from a string
+    private func parseThumbnail(from thumbnailString: String) -> Thumbnail? {
+        let components = thumbnailString.split(separator: ".")
+        guard components.count >= 2 else { return nil }
+        let path = components.dropLast().joined(separator: ".")
+        let ext = components.last?.description ?? ""
+        return Thumbnail(path: path, extension: ext)
+    }

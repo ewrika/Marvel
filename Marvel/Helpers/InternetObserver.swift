@@ -18,8 +18,10 @@ class InternetObserver {
     private init() {
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
+                self.isConnected = true
                 print("Internet connection is available.")
             } else {
+                self.isConnected = false
                 print("Internet connection is not available.")
             }
         }

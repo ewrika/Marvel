@@ -67,7 +67,13 @@ class NetworkManager {
                 self.offset += self.limit
                 completion(.success(heroes))
             case .failure(let error):
-                completion(.failure(NetworkError.error))
+                     let heroes = self.realmManager.getAllHeroes()
+                     if heroes.isEmpty {
+                         completion(.failure(NetworkError.error))
+                     } else {
+                         InternetObserver.shared.isConnected = false
+                         completion(.success(heroes))
+                     }
             }
         }
     }

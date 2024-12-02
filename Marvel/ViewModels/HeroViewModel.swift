@@ -33,7 +33,12 @@ class HeroViewModel {
                 self?.heroes.append(contentsOf: fetchedHeroes)
                 DispatchQueue.main.async {
                     self?.onHeroesUpdated?()
-                    self?.onStateChanged?(.loaded)
+                    if InternetObserver.shared.isConnected == false {
+                        self?.onStateChanged?(.offline)
+                        print("we")
+                    } else {
+                        self?.onStateChanged?(.loaded)
+                    }
                 }
             case .failure(let error):
                 DispatchQueue.main.async {

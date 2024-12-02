@@ -132,6 +132,7 @@ class HeroViewController: UIViewController {
                 self.hideLoader()
                 self.refreshControl.endRefreshing()
                 showErrorMessage()
+                collectionView.reloadData()
             }
 
         }
