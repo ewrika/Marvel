@@ -54,15 +54,7 @@ class NetworkManager {
                     )
                 }
 
-                for hero in heroes {
-                    let realmHero = RealmHeroListModel(
-                        id: hero.id,
-                        name: hero.name,
-                        descript: hero.description,
-                        thumbnail: hero.thumbnail.fullPath
-                    )
-                    self.realmManager.saveHero(hero: realmHero)
-                }
+                self.savedHeroInRealm(heroes)
 
                 self.offset += self.limit
                 completion(.success(heroes))
@@ -71,10 +63,20 @@ class NetworkManager {
                      if heroes.isEmpty {
                          completion(.failure(NetworkError.error))
                      } else {
-                         InternetObserver.shared.isConnected = false
                          completion(.success(heroes))
                      }
             }
+        }
+    }
+    private func savedHeroInRealm(_ heroes: [HeroModel]) {
+        for hero in heroes {
+            let realmHero = RealmHeroListModel(
+                id: hero.id,
+                name: hero.name,
+                descript: hero.description,
+                thumbnail: hero.thumbnail.fullPath
+            )
+            realmManager.saveHero(hero: realmHero)
         }
     }
 }

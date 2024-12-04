@@ -12,6 +12,7 @@ class HeroViewController: UIViewController {
         case loading
         case loaded
         case offline
+        case error
     }
 
     init(viewModel: HeroViewModel, coordinator: Coordinator) {
@@ -22,16 +23,6 @@ class HeroViewController: UIViewController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    private func showErrorMessage() {
-        let alert = UIAlertController(
-            title: "Произошла ошибка",
-            message: "Попробуйте повторить попытку позже.",
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        self.present(alert, animated: true)
     }
 
     private let blurEffectView: UIVisualEffectView = {
@@ -129,10 +120,14 @@ class HeroViewController: UIViewController {
                 collectionView.reloadData()
                 refreshControl.endRefreshing()
             case .offline:
-                self.hideLoader()
-                self.refreshControl.endRefreshing()
-                showErrorMessage()
+                hideLoader()
+                refreshControl.endRefreshing()
                 collectionView.reloadData()
+                AlertPresenter.showError(on: self, title: "Нет подключения к интернету", message: "Включен оффлайн режим")
+            case .error:
+                hideLoader()
+                refreshControl.endRefreshing()
+                AlertPresenter.showError(on: self, title: "Произошла ошибка", message: "Попробуйте позже")
             }
 
         }
@@ -308,8 +303,6 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     DispatchQueue.main.async {
                         cell.configure(with: image, name: hero.name)
                     }
-                } else {
-                    print("Failed to load image for \(hero.name)")
                 }
             }
 
@@ -325,8 +318,6 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 DispatchQueue.main.async {
                     self.pathView.updateColor(from: image)
                 }
-            } else {
-                print("Failed to load image for \(hero.name)")
             }
         }
 
@@ -369,8 +360,6 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     )
                     self.navigationController?.pushViewController(self.detailedViewController, animated: true)
                 }
-            } else {
-                print("Failed to load image for \(hero.name)")
             }
         }
     }

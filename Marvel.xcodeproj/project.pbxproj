@@ -20,7 +20,7 @@
 		E85779642CEB44E200D6CD67 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85779632CEB44E200D6CD67 /* AppCoordinator.swift */; };
 		E85779662CEB454800D6CD67 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85779652CEB454800D6CD67 /* Coordinator.swift */; };
 		E868B7EE2CFC68880051B759 /* InternetObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E868B7ED2CFC68880051B759 /* InternetObserver.swift */; };
-		E868B7F52CFCEEB40051B759 /* RealmBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E868B7F42CFCEEB40051B759 /* RealmBase.swift */; };
+		E868B7F52CFCEEB40051B759 /* RealmDataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E868B7F42CFCEEB40051B759 /* RealmDataBase.swift */; };
 		E868B80A2CFE35C10051B759 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E868B8092CFE35C10051B759 /* RealmSwift */; };
 		E868B80B2CFE35ED0051B759 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = E868B8092CFE35C10051B759 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E8A62A192CD0163E0081A03E /* CollectionViewPagingLayout in Frameworks */ = {isa = PBXBuildFile; productRef = E8A62A182CD0163E0081A03E /* CollectionViewPagingLayout */; };
@@ -31,6 +31,9 @@
 		E8B76FFE2CC2B9B700B62000 /* HeroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B76FFD2CC2B9B700B62000 /* HeroViewController.swift */; };
 		E8B770032CC2B9B900B62000 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8B770022CC2B9B900B62000 /* Assets.xcassets */; };
 		E8B770062CC2B9B900B62000 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E8B770052CC2B9B900B62000 /* Base */; };
+		E8DCDD5B2D0080BD00F0D6CE /* MarvelApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DCDD5A2D0080BD00F0D6CE /* MarvelApiModel.swift */; };
+		E8DCDD5D2D0081D900F0D6CE /* DataBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DCDD5C2D0081D900F0D6CE /* DataBaseManager.swift */; };
+		E8DCDD5F2D0082DB00F0D6CE /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DCDD5E2D0082DB00F0D6CE /* AlertPresenter.swift */; };
 		E8DD581A2CC79D7B00C47A36 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DD58192CC79D7B00C47A36 /* Constants.swift */; };
 		E8DD581E2CC79DD400C47A36 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DD581D2CC79DD400C47A36 /* Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -62,7 +65,7 @@
 		E85779632CEB44E200D6CD67 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E85779652CEB454800D6CD67 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		E868B7ED2CFC68880051B759 /* InternetObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetObserver.swift; sourceTree = "<group>"; };
-		E868B7F42CFCEEB40051B759 /* RealmBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmBase.swift; sourceTree = "<group>"; };
+		E868B7F42CFCEEB40051B759 /* RealmDataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDataBase.swift; sourceTree = "<group>"; };
 		E8A888532CDE8F640095BC18 /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
 		E8B76FF62CC2B9B700B62000 /* Marvel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marvel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8B76FF92CC2B9B700B62000 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +74,9 @@
 		E8B770022CC2B9B900B62000 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E8B770052CC2B9B900B62000 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E8B770072CC2B9B900B62000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E8DCDD5A2D0080BD00F0D6CE /* MarvelApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelApiModel.swift; sourceTree = "<group>"; };
+		E8DCDD5C2D0081D900F0D6CE /* DataBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseManager.swift; sourceTree = "<group>"; };
+		E8DCDD5E2D0082DB00F0D6CE /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		E8DD58192CC79D7B00C47A36 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E8DD581D2CC79DD400C47A36 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,7 +169,9 @@
 			isa = PBXGroup;
 			children = (
 				E82279962CC433F800874029 /* HeroModel.swift */,
-				E868B7F42CFCEEB40051B759 /* RealmBase.swift */,
+				E868B7F42CFCEEB40051B759 /* RealmDataBase.swift */,
+				E8DCDD5C2D0081D900F0D6CE /* DataBaseManager.swift */,
+				E8DCDD5A2D0080BD00F0D6CE /* MarvelApiModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -203,6 +211,7 @@
 			children = (
 				E822799E2CC59A7500874029 /* HeroCell.swift */,
 				E822799A2CC564FF00874029 /* TrianglePathView.swift */,
+				E8DCDD5E2D0082DB00F0D6CE /* AlertPresenter.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -297,17 +306,20 @@
 				E85779662CEB454800D6CD67 /* Coordinator.swift in Sources */,
 				E85779622CEB40C800D6CD67 /* HeroCoordinator.swift in Sources */,
 				E822799B2CC564FF00874029 /* TrianglePathView.swift in Sources */,
+				E8DCDD5D2D0081D900F0D6CE /* DataBaseManager.swift in Sources */,
 				E8496CEA2CF3870C00023275 /* NetworkManager.swift in Sources */,
 				E8496CD82CF317AD00023275 /* Environment.swift in Sources */,
 				E85779562CE7C71900D6CD67 /* ImageLoader.swift in Sources */,
+				E8DCDD5F2D0082DB00F0D6CE /* AlertPresenter.swift in Sources */,
 				E85779602CEB3FE400D6CD67 /* HeroViewModel.swift in Sources */,
-				E868B7F52CFCEEB40051B759 /* RealmBase.swift in Sources */,
+				E868B7F52CFCEEB40051B759 /* RealmDataBase.swift in Sources */,
 				E85779642CEB44E200D6CD67 /* AppCoordinator.swift in Sources */,
 				E8B76FFE2CC2B9B700B62000 /* HeroViewController.swift in Sources */,
 				E82279972CC433F800874029 /* HeroModel.swift in Sources */,
 				E8B76FFA2CC2B9B700B62000 /* AppDelegate.swift in Sources */,
 				E8A888542CDE8F640095BC18 /* DetailedViewController.swift in Sources */,
 				E822799F2CC59A7500874029 /* HeroCell.swift in Sources */,
+				E8DCDD5B2D0080BD00F0D6CE /* MarvelApiModel.swift in Sources */,
 				E8B76FFC2CC2B9B700B62000 /* SceneDelegate.swift in Sources */,
 				E868B7EE2CFC68880051B759 /* InternetObserver.swift in Sources */,
 				E8DD581A2CC79D7B00C47A36 /* Constants.swift in Sources */,

@@ -8,14 +8,14 @@
 import Foundation
 import Network
 
-class InternetObserver {
+final class InternetObserver {
     static let shared = InternetObserver()
     private let monitor = NWPathMonitor()
     private let queue = DispatchQueue.global(qos: .background)
 
-    var isConnected: Bool?
+    private(set) var isConnected: Bool = false
 
-    private init() {
+    func startMonitoring() {
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
                 self.isConnected = true
@@ -26,6 +26,10 @@ class InternetObserver {
             }
         }
         monitor.start(queue: queue)
+    }
+
+    func stopMonitoring() {
+        monitor.cancel()
     }
 
 }

@@ -35,7 +35,6 @@ class HeroViewModel {
                     self?.onHeroesUpdated?()
                     if InternetObserver.shared.isConnected == false {
                         self?.onStateChanged?(.offline)
-                        print("we")
                     } else {
                         self?.onStateChanged?(.loaded)
                     }
@@ -43,7 +42,7 @@ class HeroViewModel {
             case .failure(let error):
                 DispatchQueue.main.async {
                     self?.onError?(error)
-                    self?.onStateChanged?(.offline)
+                    self?.onStateChanged?(.error)
                 }
             }
         }
