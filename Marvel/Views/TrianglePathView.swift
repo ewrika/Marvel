@@ -12,7 +12,8 @@ final class TrianglePathView: UIView {
     private let path = UIBezierPath()
     var color: UIColor = UIColor(.clear) {
         didSet {
-            setNeedsDisplay()
+            let pathBounds = path.bounds
+            setNeedsDisplay(pathBounds)
         }
     }
 

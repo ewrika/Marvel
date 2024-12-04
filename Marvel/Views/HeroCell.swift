@@ -9,7 +9,7 @@ final class HeroCell: UICollectionViewCell {
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.color = .white
         indicator.hidesWhenStopped = true
-        
+
         return indicator
     }()
 

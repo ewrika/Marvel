@@ -5,6 +5,14 @@ class HeroViewController: UIViewController {
     private var lastIndex = 0
     private let viewModel: HeroViewModel
     private let coordinator: Coordinator?
+    private let detailedViewController = DetailedViewController()
+    private var isLoadingMoreHeroes = false
+
+    enum ViewState {
+        case loading
+        case loaded
+        case offline
+    }
 
     init(viewModel: HeroViewModel, coordinator: Coordinator) {
         self.viewModel = viewModel
@@ -15,6 +23,52 @@ class HeroViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    private func showErrorMessage() {
+        let alert = UIAlertController(
+            title: "Произошла ошибка",
+            message: "Попробуйте повторить попытку позже.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true)
+    }
+
+    private let blurEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let effectView = UIVisualEffectView(effect: blurEffect)
+        effectView.translatesAutoresizingMaskIntoConstraints = false
+        effectView.alpha = 0
+
+        return effectView
+    }()
+
+    private var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.color = .white
+        indicator.hidesWhenStopped = true
+
+        return indicator
+    }()
+
+    private let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [
+            .foregroundColor: UIColor.white
+        ])
+
+        return refreshControl
+    }()
+
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.alwaysBounceVertical = true
+
+        return scrollView
+    }()
 
     private let logoMarvel: UIImageView = {
         let imageView = UIImageView()
@@ -59,49 +113,145 @@ class HeroViewController: UIViewController {
         return collectionView
     }()
 
-    private let detailedViewController = DetailedViewController()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Constants.Color.backGround
+        setupView()
+        setupCollectionView()
+        setupRefreshControl()
 
+        viewModel.onStateChanged = { [weak self] state in
+            guard let self = self else {return}
+            switch state {
+            case .loading:
+                showLoader()
+            case .loaded:
+                hideLoader()
+                collectionView.reloadData()
+                refreshControl.endRefreshing()
+            case .offline:
+                self.hideLoader()
+                self.refreshControl.endRefreshing()
+                showErrorMessage()
+            }
+
+        }
+
+        bindViewModel()
+        viewModel.loadHeroes()
+    }
+
+    private func setupView() {
+        view.backgroundColor = Constants.Color.backGround
         addSubviews()
         setupConstraints()
+    }
 
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
+    private func setupCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
 
-        setInitialPathViewColor()
+    private func setupRefreshControl() {
+        scrollView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshHeroes), for: .valueChanged)
+    }
 
+    @objc private func refreshHeroes() {
+        showLoader()
+        viewModel.loadHeroes()
+    }
+
+    private func bindViewModel() {
+        viewModel.onHeroesUpdated = {
+            self.collectionView.reloadData()
+            self.refreshControl.endRefreshing()
+            self.setInitialPathViewColor()
+            self.hideLoader()
+        }
+
+        viewModel.onError = {  error in
+            self.refreshControl.endRefreshing()
+            self.hideLoader()
+            print("Error loading heroes: \(error.localizedDescription)")
+        }
     }
 
     private func setInitialPathViewColor() {
-        guard let firstHero = heroList.first, let url = URL(string: firstHero.url) else {
-            print("Invalid URL for first hero image")
+        guard let firstHero = viewModel.heroes.first else {
+            print("No Heroes available")
             return
         }
 
-        Task {
-            if let image = await ImageLoader.shared.loadImage(from: url) {
+        Task { [weak self] in
+            guard let self = self else { return }
+            if let image = await self.viewModel.loadImage(for: firstHero) {
                 DispatchQueue.main.async {
                     self.pathView.updateColor(from: image)
                 }
             }
         }
+
+    }
+
+    private func showLoader() {
+        activityIndicator.startAnimating()
+        view.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.3) {
+            self.blurEffectView.alpha = 1
+        }
+    }
+
+    private func hideLoader() {
+        activityIndicator.stopAnimating()
+        view.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.3) {
+            self.blurEffectView.alpha = 0
+        }
     }
 
     private func setupConstraints() {
+        scrollViewSetup()
         marvelLogoSetup()
         labelSetup()
         pathSetup()
         cellImageSetup()
+        blurEffectViewSetup()
+        activityIndicatorSetup()
     }
 
     private func addSubviews() {
-        view.addSubview(logoMarvel)
-        view.addSubview(label)
-        view.addSubview(pathView)
-        view.addSubview(collectionView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(logoMarvel)
+        scrollView.addSubview(label)
+        scrollView.addSubview(pathView)
+        scrollView.addSubview(collectionView)
+        view.addSubview(blurEffectView)
+        view.addSubview(activityIndicator)
+    }
+
+    private func activityIndicatorSetup() {
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+
+    private func blurEffectViewSetup() {
+        NSLayoutConstraint.activate([
+            blurEffectView.topAnchor.constraint(equalTo: view.topAnchor),
+            blurEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            blurEffectView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            blurEffectView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+
+    private func scrollViewSetup() {
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 
     private func marvelLogoSetup() {
@@ -147,12 +297,10 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HeroCell.self), for: indexPath) as? HeroCell else {
-             print("failed")
+            print("failed")
             return UICollectionViewCell()
         }
         let hero = viewModel.hero(at: indexPath.item)
-
-        if let url = URL(string: hero.url) {
             cell.configure(with: nil, name: hero.name)
             Task {
                 if let image = await viewModel.loadImage(for: hero) {
@@ -163,9 +311,6 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     print("Failed to load image for \(hero.name)")
                 }
             }
-        } else {
-            print("Invalid URL for hero image \(hero.name)")
-        }
 
         return cell
     }
@@ -173,12 +318,8 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let centerIndex = findCenterIndex()
         let hero = viewModel.hero(at: centerIndex)
 
-        guard let url = URL(string: hero.url) else {
-            print("Invalid URL for hero image \(hero.image)")
-            return
-        }
-
-        Task {
+        Task { [weak self] in
+            guard let self = self else { return }
             if let image = await viewModel.loadImage(for: hero) {
                 DispatchQueue.main.async {
                     self.pathView.updateColor(from: image)
@@ -190,6 +331,23 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     }
 
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard !viewModel.heroes.isEmpty else { return }
+
+        let offsetX = scrollView.contentOffset.x
+        let contentWidth = scrollView.contentSize.width
+        let frameWidth = scrollView.frame.width
+
+        if offsetX > contentWidth - frameWidth * 2 && !isLoadingMoreHeroes {
+            isLoadingMoreHeroes = true
+            viewModel.loadHeroes()
+            viewModel.onHeroesUpdated = {
+                self.collectionView.reloadData()
+                self.isLoadingMoreHeroes = false
+            }
+        }
+    }
+
     private func findCenterIndex() -> Int {
         let center = self.view.convert(self.collectionView.center, to: self.collectionView)
         let index = collectionView.indexPathForItem(at: center)
@@ -198,12 +356,7 @@ extension HeroViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let hero = heroList[indexPath.item]
-
-        guard let url = URL(string: hero.url) else {
-            print("Invalid URL for hero image \(hero.image)")
-            return
-        }
+        let hero = viewModel.hero(at: indexPath.item)
 
         Task {
             if let image = await viewModel.loadImage(for: hero) {

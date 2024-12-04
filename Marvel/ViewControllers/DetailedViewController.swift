@@ -14,20 +14,19 @@ class DetailedViewController: UIViewController {
         backButton.setImage(Constants.Photo.arrowBack, for: .normal)
         backButton.tintColor = .white
         backButton.setTitle("", for: .normal)
+        backButton.addAction(UIAction {  _ in
+            self.navigationController?.popViewController(animated: true) }, for: .touchUpInside)
 
         let backBarButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = backBarButtonItem
     }
 
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .cyan
+        imageView.clipsToBounds = true
 
         return imageView
     }()
@@ -97,12 +96,12 @@ class DetailedViewController: UIViewController {
     }
 
     private func setupDescriptionLabel() {
-            NSLayoutConstraint.activate([
-                descriptionLabel.topAnchor.constraint(equalTo: nameLabel.safeAreaLayoutGuide.bottomAnchor, constant: 20),
-                descriptionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-                descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-                descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
+        NSLayoutConstraint.activate([
+            descriptionLabel.topAnchor.constraint(equalTo: nameLabel.safeAreaLayoutGuide.bottomAnchor, constant: 20),
+            descriptionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 
 }
