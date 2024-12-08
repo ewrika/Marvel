@@ -27,18 +27,3 @@ struct Thumbnail: Decodable {
         return "\(path).\(self.extension)"
     }
 }
-
-struct CharacterResponse: Decodable {
-    let data: CharacterData
-}
-
-struct CharacterData: Decodable {
-    let results: [HeroModel]
-}
-
-struct Character: Decodable {
-    let id: Int
-    let name: String
-    let description: String
-    let thumbnail: Thumbnail
-}

@@ -17,8 +17,9 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
         let navigationController = UINavigationController()
         let appCoordinator = AppCoordinator(navigationController: navigationController)
+        InternetObserver.shared.startMonitoring()
 
-        appCoordinator.start() // Это запустит нужный экран
+        appCoordinator.start()
 
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
