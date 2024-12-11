@@ -22,7 +22,7 @@ Marvel Heroes App — это приложение для поклонников 
 
 Архитектура
 
-	•	MVVM 
+	•	MVVM  + Coordinator
 
 
 Preview - https://youtube.com/shorts/0LwvLzPwPkU
